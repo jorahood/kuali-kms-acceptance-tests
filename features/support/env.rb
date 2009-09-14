@@ -10,14 +10,23 @@ Webrat.configure do |config|
 
   config.mode = :selenium
 
+  config.selenium_server_address = 'localhost'
+
+  config.application_framework = :external
 end
+
+#this is necessary to have webrat “wait_for” the response body to be available
+
+#when writing steps that match against the response body returned by selenium
+
+World(Webrat::Selenium::Matchers)
 
 require 'webrat/core/matchers'
 
-require 'bumps'
-
 require File.expand_path(File.dirname(__FILE__) + '/jira_links_formatter')
 
-Bumps.configure { use_server 'http://localhost:1981'
-                  format_results_with(JiraLinksFormatter)
-                  }
+#require 'bumps'
+#
+#Bumps.configure { use_server 'http://localhost:1981'
+#  format_results_with(JiraLinksFormatter)
+#}
