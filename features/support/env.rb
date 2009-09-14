@@ -25,11 +25,11 @@ require 'cucumber/formatter/unicode'
 #
 require File.expand_path(File.dirname(__FILE__) + '/jira_links_formatter')
 
-#require 'bumps'
-#
-#Bumps.configure { use_server 'http://localhost:1981'
+require 'bumps'
+
+Bumps.configure { use_server 'http://localhost:1981'
 #  format_results_with(JiraLinksFormatter)
-#}
+}
 
 #for selenium support w/o webrat until I can figure out what's going on with
 #https://webrat.lighthouseapp.com/projects/10503/tickets/214-cucumber-selenium_webrat-example-completely-failing
