@@ -6,9 +6,6 @@ I want to see that the Sage software project exists
 
 Scenario: Sage is visible on the web
 
- Given I open Sage's homepage
+ Given I open Google
 
-  Then I should see a web page
-
-           
-    
+  Then I should see "Gooogle"
