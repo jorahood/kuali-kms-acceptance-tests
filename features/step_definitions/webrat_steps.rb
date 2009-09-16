@@ -1,5 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
+# these includes make Webrat work outside rails. From "Using Selenium Without Rails"
+# http://wiki.github.com/brynary/webrat/selenium
+include Webrat::Methods
+include Webrat::Selenium::Methods
+include Webrat::Selenium::Matchers
+
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
