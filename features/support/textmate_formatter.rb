@@ -1,7 +1,7 @@
 require 'cucumber/formatter/ordered_xml_markup'
 require 'cucumber/formatter/duration'
-
 class TextmateFormatter < Cucumber::Ast::Visitor
+    TextmateFormatter::RAILS_ROOT = File.dirname(__FILE__) + "/../../" # hack to make this work outside RAILS
 
     include ERB::Util # for the #h method
     include Cucumber::Formatter::Duration
