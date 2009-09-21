@@ -1,6 +1,9 @@
-Given /^I open Google$/ do
-#  @browser.open('http://140.182.144.96:8080/sagejpaspring/Home.do') # Selenium
-visit('http://google.com')
+Given /^I open (.+)$/ do |web_site|
+  #  @browser.open(web_site) # Selenium
+  @response = visit(web_site) # Mechanize
 end
 
+Then /^I should say "([^\"]*)"$/ do |arg1|
+  puts response.body
+end
 
