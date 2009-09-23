@@ -16,13 +16,15 @@ Webrat.configure do |config|
   config.application_framework = :external
 
 end
-#World(Webrat::Methods)
-#World(Webrat::Selenium::Methods)
-#World(Webrat::Matchers)
-#World(Webrat::MechanizeAdapter)
-#this is necessary to have webrat “wait_for” the response body to be available
-#when writing steps that match against the response body returned by selenium
-#World(Webrat::Selenium::Matchers) #mix into Cucumber's World obj
+
+#World do
+#  session = Webrat::SeleniumSession.new
+#  session.extend(Webrat::Methods)
+#  session.extend(Webrat::Selenium::Methods)
+#  session.extend(Webrat::Matchers)
+#  session.extend(Webrat::Selenium::Matchers)
+#  session
+#end
 
 World do
   session = Webrat::MechanizeAdapter.new
