@@ -1,0 +1,1 @@
+Acceptance test framework for the Kuali Sage project: Confluence is the Feature editor, Bumps pulls the Features into Cucumber w/ Mechanize and publishes junit xml report files to be consumed from the original Confluence page on which the Feature lives. The point is to drive tests of the Sage project web interface
