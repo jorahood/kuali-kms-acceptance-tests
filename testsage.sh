@@ -1,4 +1,2 @@
-rm results/*
-rm results/junit/*
 cucumber -p sage
-scp -r results/* kmtools.uits.iu.edu:/var/www/cucumber/
+scp -r sage-tests/ kmtools.uits.iu.edu:/var/www/sage-tests/
