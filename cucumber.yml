@@ -1,1 +1,2 @@
 default: features
+sage: --format junit --out results/junit --format html --out results/index.html --format pretty
