@@ -1,4 +1,4 @@
-Given /^I open (.+)$/ do |web_site|
+When /^I open (.+)$/ do |web_site|
   @response = visit web_site # this works for mechanize but not Selenium
 end
 

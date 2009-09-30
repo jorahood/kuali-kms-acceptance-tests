@@ -11,12 +11,13 @@ require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('
 Webrat.configure do |config|
 
   config.mode = :mechanize
-#  config.mode = :selenium
-#  config.selenium_server_address = 'localhost'
+  #  config.mode = :selenium
+  #  config.selenium_server_address = 'localhost'
   config.application_framework = :external
 
 end
 
+# create World for Selenium:
 #World do
 #  session = Webrat::SeleniumSession.new
 #  session.extend(Webrat::Methods)
@@ -26,6 +27,7 @@ end
 #  session
 #end
 
+# create World for Mechanize
 World do
   session = Webrat::MechanizeAdapter.new
   session.extend(Webrat::Methods)
@@ -34,19 +36,37 @@ World do
   session
 end
 
-#class MechanizeWorld < Webrat::MechanizeAdapter
-#  include Webrat::Matchers
-#  include Webrat::Methods
-#end
-#
-#World do
-#  MechanizeWorld.new
-#end
-#
-require File.expand_path(File.dirname(__FILE__) + '/jira_links_formatter')
+#require File.expand_path(File.dirname(__FILE__) + '/jira_links_formatter')
 
-#require 'bumps'
-#
-#Bumps.configure { use_server 'http://localhost:1981'
-##  format_results_with(JiraLinksFormatter)
-#}
+require 'bumps'
+
+Bumps.configure do
+  pull_from 'https://uisapp2.iu.edu/confluence-prd//createrssfeed.action?types=page&sort=modified'+ 
+    '&showContent=true&spaces=Sage&labelString=acceptancetest&rssType=atom&maxResults=1000' + 
+    '&timeSpan=1000&publicFeed=true&title=Sage+Features+Automated+Acceptance+Tests&showDiff=false'
+end
+
+# monkey-patches to Bumps to let it parse features from Confluence and to make it not push results
+module Bumps
+  class RemoteFeature
+  # hacked to parse Confluence-formatted user stories
+    def self.parse xml
+      document = Nokogiri::XML xml
+      document.search('summary').collect do |feature_element|
+        feature = Feature.new
+        feature.content = feature_element.text.gsub(/<\/?[^>]*>/, "").gsub(/&nbsp;/, "").sub(/^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
+        feature.name = /Feature:\s*([\w ]+)/.match(feature.content)[1].gsub(/\s+/, "_") + '.feature' || '???'
+        feature
+      end
+    end
+  end
+
+  class CucumberConfig
+
+    def process!
+      validate
+      update_bumps_config
+      #register_formatter # commenting this out stops the push formatter from being appended to cucumbers' options array, so no pushing
+    end
+  end
+end
