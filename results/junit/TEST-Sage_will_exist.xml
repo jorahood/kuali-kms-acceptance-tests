@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="1" name="Sage will exist" tests="1" time="0.045370">
-<testcase classname="Sage will exist.Sage has a web address that it responds to" name="Sage has a web address that it responds to" time="0.045370">
+<testsuite errors="0" failures="1" name="Sage will exist" tests="1" time="0.007080">
+<testcase classname="Sage will exist.Sage has a web address that it responds to" name="Sage has a web address that it responds to" time="0.007080">
   <failure message="failed Sage has a web address that it responds to" type="failed">
 Scenario: Sage has a web address that it responds to
 
