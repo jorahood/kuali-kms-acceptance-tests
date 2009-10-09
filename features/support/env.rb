@@ -1,10 +1,8 @@
 require 'spec/expectations'
 
-
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
 require 'webrat'
-require 'webrat/core/matchers'
 require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
 
 
@@ -32,7 +30,7 @@ World do
   session = Webrat::MechanizeAdapter.new
   session.extend(Webrat::Methods)
   session.extend(Webrat::Matchers)
-  session.extend(Webrat::HaveTagMatcher)
+  session.extend(CustomMatchers)
   session
 end
 
@@ -54,7 +52,8 @@ module Bumps
       document = Nokogiri::XML xml
       document.search('summary').collect do |feature_element|
         feature = Feature.new
-        feature.content = feature_element.text.gsub(/<\/?[^>]*>/, "").gsub(/&nbsp;/, " ").sub(/^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
+        feature.content = feature_element.text.gsub(/<\/?[^>]*>/, "").gsub(
+          /&nbsp;/, " ").gsub(/\!/,"|").sub(/^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
         feature.name = /Feature:\s*([\w ]+)/.match(feature.content)[1].gsub(/\s+/, "_") + '.feature' || '???'
         feature
       end
@@ -66,7 +65,8 @@ module Bumps
     def process!
       validate
       update_bumps_config
-      #register_formatter # commenting this out stops the push formatter from being appended to cucumbers' options array, so no pushing
+      # register_formatter # commenting this out stops the push formatter from
+      # being appended to cucumbers' options array, so no pushing
     end
   end
 end
