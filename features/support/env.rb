@@ -53,7 +53,8 @@ module Bumps
       document.search('summary').collect do |feature_element|
         feature = Feature.new
         feature.content = feature_element.text.gsub(/<\/?[^>]*>/, "").gsub(
-          /&nbsp;/, " ").gsub(/\!/,"|").sub(/^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
+          /&nbsp;/, " ").gsub(/\!/,"|").gsub(/&#91;/, "[").gsub(/&#93;/, "]").sub(
+          /^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
         feature.name = /Feature:\s*([\w ]+)/.match(feature.content)[1].gsub(/\s+/, "_") + '.feature' || '???'
         feature
       end

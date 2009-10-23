@@ -18,7 +18,7 @@ Then I should see "Search Results" within "title"
 And I should see "Common Inca errors on the TeraGrid, and their solutions" within "div#content ul"
 And I should see "What is PMEMD, and where is it installed on the TeraGrid?" within "div#content ul"
 
-Scenario: No duplicate search returns
+Scenario: There should be no duplicated search returns
 Given I open http://staging.teragrid.org/cgi-bin/kb.cgi
 When I fill in "terms" with "common inca errors or common inca errors" 
 And I press "Go"
