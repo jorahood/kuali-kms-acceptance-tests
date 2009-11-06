@@ -1,2 +1,2 @@
 default: features
-sage: --format junit --out results/junit --format html --out results/index.html
+sage: --format junit --out results/junit --strict --format html --out results/index.html
