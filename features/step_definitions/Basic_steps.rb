@@ -17,3 +17,7 @@ When /^I request doc ([a-z]{4})$/ do |docid|
   params = "?action=getdoc&docid=" + docid
   @response = visit(kb5_url + params)
 end
+
+Then /^I should see element (.*)$/ do |element|
+  @response.should match_selector(element)
+end
