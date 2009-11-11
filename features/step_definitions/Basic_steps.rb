@@ -21,3 +21,7 @@ end
 Then /^I should see element (.*)$/ do |element|
   @response.should match_selector(element)
 end
+
+Then /^I should not see element (.*)$/ do |element|
+  @response.should_not match_selector(element)
+end
