@@ -1,5 +1,5 @@
 def kb5_url
-  "https://test.uisapp2.iu.edu/sage-stg/KBServlet"
+  "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBServlet"
 end
 
 When /^I open (.+)$/ do |web_site|
@@ -11,6 +11,11 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
     regexp = Regexp.new(regexp)
     content.should contain_once(regexp)
   end
+end
+
+When /^I search for "([^\"]*)"$/ do |terms|
+  params = "?action=search&q=" + terms
+  @response = visit(kb5_url + params)
 end
 
 When /^I request doc ([a-z]{4})$/ do |docid|
