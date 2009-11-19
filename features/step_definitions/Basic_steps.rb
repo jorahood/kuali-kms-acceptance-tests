@@ -18,6 +18,11 @@ When /^I search for "([^\"]*)"$/ do |terms|
   @response = visit(kb5_url + params)
 end
 
+When /^I search for '([^\']*)'$/ do |terms|
+  params = "?action=search&q=" + terms
+  @response = visit(kb5_url + params)
+end
+
 When /^I request doc ([a-z]{4})$/ do |docid|
   params = "?action=getdoc&docid=" + docid
   @response = visit(kb5_url + params)
