@@ -35,3 +35,7 @@ end
 Then /^I should not see element (.*)$/ do |element|
   @response.should_not match_selector(element)
 end
+
+When /^I fill in "([^\"]*)" with$/ do |field, string|
+  fill_in(field, :with => string)
+end
