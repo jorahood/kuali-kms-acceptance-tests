@@ -14,12 +14,12 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
 end
 
 When /^I search for "([^\"]*)"$/ do |terms|
-  params = "?action=search&q=" + terms
+  params = "?action=search&query=" + terms
   @response = visit(kb5_url + params)
 end
 
 When /^I search for '([^\']*)'$/ do |terms|
-  params = "?action=search&q=" + terms
+  params = "?action=search&query=" + terms
   @response = visit(kb5_url + params)
 end
 
