@@ -1,5 +1,5 @@
 def kb5_url
-  "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBServlet"
+  "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBDocMan"
 end
 
 Given /^document "([^\"]*)" is added with content$/ do |docid, string|
