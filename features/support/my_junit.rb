@@ -12,7 +12,7 @@ module Cucumber
         if status == :passed || failed
           @builder.testcase(:classname => classname, :name => name, :time => "%.6f" % duration) do
             if failed
-              slug_line = exception ? "#{exception.message.match(/.*/)[0]} (#{exception.class})" : name
+              slug_line = exception ? "#{exception.message.match(/.*/)[0]}" : name
               @builder.failure(:message => "#{status.to_s}: #{slug_line}", :type => status.to_s) do
                 @builder.text! @output
                 @builder.text!(format_exception(exception)) if exception
