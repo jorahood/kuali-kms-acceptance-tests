@@ -3,10 +3,10 @@ def kb5_url
 end
 
 def search_params
-  "?action=startSearch&query="
+  "?action=search&query="
 end
 
-Given /^document "([^\"]*)" is added with content$/ do |docid, string|
+Given /^document "([^\"]*)" exists with content$/ do |docid, string|
   steps %Q{
   When I follow "Add document"
   And I fill in "ditacontent" with
