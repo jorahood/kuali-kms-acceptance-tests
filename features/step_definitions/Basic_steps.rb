@@ -2,8 +2,8 @@ def kb5_url
   "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBDocMan"
 end
 
-def search_params
-  "?action=search&query="
+def search_url
+  "#{kb5_url}?action=startSearch"
 end
 
 Given /^document "([^\"]*)" exists with content$/ do |docid, string|
@@ -35,14 +35,16 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
 end
 
 When /^I search for "([^\"]*)"$/ do |terms|
-  params = search_params + terms
-  @response = visit(kb5_url + params)
+  @response = visit(search_url)
+  fill_in("query", :with => terms)
+  click_button "Search"
 end
 
 #so I can use single quotes around double-quoted search strings:
 When /^I search for '([^\']*)'$/ do |terms|
-  params = search_params + terms
-  @response = visit(kb5_url + params)
+  @response = visit(search_url)
+  fill_in("query", :with => terms)
+  click_button "Search"
 end
 
 When /^I request doc ([a-z]{4})$/ do |docid|
