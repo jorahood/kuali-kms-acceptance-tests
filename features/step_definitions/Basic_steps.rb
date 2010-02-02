@@ -24,7 +24,7 @@ Given /^I fill in "([^\"]*)" with $/ do |field, string|
 end
 
 When /^I open (.+)$/ do |web_site|
-  @response = visit web_site # this works for mechanize but not Selenium
+  $browser.goto web_site
 end
 
 Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
@@ -35,21 +35,21 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
 end
 
 When /^I search for "([^\"]*)"$/ do |terms|
-  @response = visit(search_url)
+  @response = $browser.goto(search_url)
   fill_in("query", :with => terms)
   click_button "Search"
 end
 
 #so I can use single quotes around double-quoted search strings:
 When /^I search for '([^\']*)'$/ do |terms|
-  @response = visit(search_url)
+  $browser.goto(search_url)
   fill_in("query", :with => terms)
   click_button "Search"
 end
 
 When /^I request doc ([a-z]{4})$/ do |docid|
   params = "?action=getdoc&docid=" + docid
-  @response = visit(kb5_url + params)
+  $browser.goto(kb5_url + params)
 end
 
 Then /^I should see element (.*)$/ do |element|

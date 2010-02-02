@@ -1,40 +1,9 @@
 require 'spec/expectations'
+require 'culerity'
 
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
-require 'webrat'
 require 'cucumber/web/tableish' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
-
-
-Webrat.configure do |config|
-
-  config.mode = :mechanize
-  #  config.mode = :selenium
-  #  config.selenium_server_address = 'localhost'
-  config.application_framework = :external
-
-end
-
-# create World for Selenium:
-#World do
-#  session = Webrat::SeleniumSession.new
-#  session.extend(Webrat::Methods)
-#  session.extend(Webrat::Selenium::Methods)
-#  session.extend(Webrat::Matchers)
-#  session.extend(Webrat::Selenium::Matchers)
-#  session
-#end
-
-# create World for Mechanize
-World do
-  session = Webrat::MechanizeAdapter.new
-  session.extend(Webrat::Methods)
-  session.extend(Webrat::Matchers)
-  session.extend(CustomMatchers)
-  session
-end
-
-#require File.expand_path(File.dirname(__FILE__) + '/jira_links_formatter')
 
 require 'bumps'
 

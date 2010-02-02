@@ -1,7 +1,5 @@
-require 'culerity'
-
 Before do
-  $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
+#  $rails_server ||= Culerity::run_rails(:environment => 'culerity', :port => 3001)
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox3,
     :javascript_exceptions => true,
@@ -9,13 +7,13 @@ Before do
     :status_code_exceptions => true
   }
   $browser.log_level = :warning
-  @host = 'http://localhost:3001'
+  @host = 'http://cowhorn.uits.indiana.edu:8080'
 end
 
 at_exit do
   $browser.exit if $browser
   $server.close if $server
-  Process.kill(6, $rails_server.pid.to_i) if $rails_server
+#  Process.kill(6, $rails_server.pid.to_i) if $rails_server
 end
 
 When /I follow "(.*)"/ do |link|
