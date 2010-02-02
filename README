@@ -1,1 +1,17 @@
-Acceptance test framework for the Kuali Sage project: Confluence is the Feature editor, Bumps pulls the Features into Cucumber w/ Mechanize and publishes junit xml report files to be consumed from the original Confluence page on which the Feature lives. The point is to drive tests of the Sage project web interface
+Acceptance test framework for the Kuali Sage project:
+ * Confluence is the Feature editor,
+ * Bumps pulls the Features into Cucumber and publishes junit xml report files to be consumed from the original Confluence page on which the Feature lives.
+ * Browser automation using Culerity
+
+Notes on upgrade from Webrat driving Mechanize to Culerity driving Celerity driving HTMLUnit:
+    1. Installed openjdk-6-jre-headless on the server
+    2. jruby installed to /usr/local/jruby/bin
+    3. added jruby path to PATH in my crontab and my own path
+    4. add paths for command line tools jruby needs such as uname, tr, basename, dirname, and, of course, java
+    4. jruby -S gem install celerity
+
+Crontab:
+    MAILTO=jorahood@indiana.edu
+    PATH=$PATH:/bin:/usr/bin:/usr/local/jruby/bin
+    * * * * * cd /opt/apps/sage-acceptance-tests/; rm features/*.feature > /dev/null 2>&1; /opt/ruby-enterprise/bin/cucumber -p sage > /dev/null 2>&1
+    0 0 * * * rm /opt/apps/sage-acceptance-tests/results/index.html; rm /opt/apps/sage-acceptance-tests/results/junit/*
