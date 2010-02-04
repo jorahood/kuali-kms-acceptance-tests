@@ -20,7 +20,7 @@ Given /^document "([^\"]*)" exists with content$/ do |docid, string|
 end
 
 Given /^I fill in "([^\"]*)" with $/ do |field, string|
-  fill_in(field, :with => string)
+  find_by_label_or_id(:text_field, field).set(value)
 end
 
 When /^I open (.+)$/ do |web_site|
@@ -50,6 +50,11 @@ end
 When /^I request doc ([a-z]{4})$/ do |docid|
   params = "?action=getdoc&docid=" + docid
   $browser.goto(kb5_url + params)
+end
+
+Then /I should see "(.*)"/ do |text|
+  # from http://github.com/alvinschur/celerity-examples/blob/master/features/step_definitions/first_steps.rb
+  $browser.html.should  =~ /#{text}/m
 end
 
 Then /^I should see element (.*)$/ do |element|
