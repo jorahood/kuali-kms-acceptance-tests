@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 def kb5_url
   "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBDocMan"
 end
@@ -19,8 +21,9 @@ Given /^document "([^\"]*)" exists with content$/ do |docid, string|
   }
 end
 
-Given /^I fill in "([^\"]*)" with $/ do |field, string|
-  find_by_label_or_id(:text_field, field).set(value)
+#with single quotation marks since we may need double quotes in it
+Given /^I fill in "([^\"]*)" with '(.*)'$/ do |field, string|
+  find_by_label_or_id(:text_field, field).set(string)
 end
 
 When /^I open (.+)$/ do |web_site|
@@ -35,16 +38,16 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
 end
 
 When /^I search for "([^\"]*)"$/ do |terms|
-  @response = $browser.goto(search_url)
-  fill_in("query", :with => terms)
-  click_button "Search"
+  $browser.goto(search_url)
+  $browser.text_field("query").value = terms
+  $browser.button("Search").click
 end
 
 #so I can use single quotes around double-quoted search strings:
 When /^I search for '([^\']*)'$/ do |terms|
   $browser.goto(search_url)
-  fill_in("query", :with => terms)
-  click_button "Search"
+  $browser.text_field("query").value = terms
+  $browser.button("Search").click
 end
 
 When /^I request doc ([a-z]{4})$/ do |docid|
@@ -58,13 +61,9 @@ Then /I should see "(.*)"/ do |text|
 end
 
 Then /^I should see element (.*)$/ do |element|
-  @response.should match_selector(element)
+  Nokogiri::XML($browser.page.as_xml).at_css(element).should_not be_nil
 end
 
 Then /^I should not see element (.*)$/ do |element|
-  @response.should_not match_selector(element)
-end
-
-When /^I fill in "([^\"]*)" with$/ do |field, string|
-  fill_in(field, :with => string)
+  Nokogiri::XML($browser.page.as_xml).at_css(element).should be_nil
 end
