@@ -1,9 +1,18 @@
 require 'spec/expectations'
-require 'culerity'
 
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
 require 'cucumber/web/tableish' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
+
+require 'capybara/cucumber'
+require 'capybara/session'
+# Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
+# order to ease the transition to Capybara we set the default here. If you'd
+# prefer to use XPath just remove this line and adjust any selectors in your
+# steps to use the XPath syntax.
+Capybara.default_selector = :css
+Capybara.default_driver = :culerity
+Capybara.app_host = "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBDocMan"
 
 require 'bumps'
 
