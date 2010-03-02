@@ -9,7 +9,7 @@ module NavigationHelpers
     case page_name
     
     when /the homepage/
-      '/kms/index.cat'
+      '/sage-stg/kms/index.cat'
 
     when /the search page/
       search_path

@@ -4,3 +4,5 @@ results/
 results/index.html
 index.html
 .idea
+capybara-*.html
+test.feature
