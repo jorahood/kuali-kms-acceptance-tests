@@ -124,7 +124,7 @@ Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, s
   regexp = Regexp.new(regexp)
   with_scope(selector) do
     if defined?(Spec::Expectations)
-      page.shoul have_not_xpath('//*', :text => regexp)
+      page.should have_not_xpath('//*', :text => regexp)
     else
       assert page.has_not_xpath?('//*', :text => regexp)
     end

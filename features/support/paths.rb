@@ -9,8 +9,10 @@ module NavigationHelpers
     case page_name
     
     when /the homepage/
-      '/'
-    
+      '/kms/index.cat'
+
+    when /the search page/
+      search_path
     # Add more mappings here.
     # Here is a more fancy example:
     #

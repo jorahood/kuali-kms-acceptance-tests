@@ -3,12 +3,14 @@ Acceptance test framework for the Kuali Sage project:
  * Bumps pulls the Features into Cucumber and publishes junit xml report files to be consumed from the original Confluence page on which the Feature lives.
  * Browser automation using Culerity
 
-Notes on upgrade from Webrat driving Mechanize to Culerity driving Celerity driving HTMLUnit:
+Notes on upgrade from Webrat driving Mechanize to Capybara driving Culerity driving Celerity driving HTMLUnit:
     1. Installed openjdk-6-jre-headless on the server
     2. jruby installed to /usr/local/jruby/bin
     3. added jruby path to PATH in my crontab and my own path
     4. add paths for command line tools jruby needs such as uname, tr, basename, dirname, and, of course, java
     4. jruby -S gem install celerity
+    5. sudo gem install culerity
+    6. sudo gem install capybara
 
 Crontab:
     MAILTO=jorahood@indiana.edu

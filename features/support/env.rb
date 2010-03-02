@@ -12,8 +12,8 @@ require 'capybara/session'
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
 Capybara.default_driver = :culerity
-Capybara.app_host = "http://cowhorn.uits.indiana.edu:8080/sage-stg/KBDocMan"
-
+Capybara.app_host = "http://cowhorn.uits.indiana.edu:8080"
+Capybara.run_server = false # to keep Capybara from starting a Rack server
 require 'bumps'
 
 Bumps.configure do
