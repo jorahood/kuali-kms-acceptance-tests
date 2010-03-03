@@ -1,21 +1,20 @@
-def search_path
-  "/sage-stg/kms/form/search.cat"
-end
-
-def doc_xml_path
-  "/sage-stg/kms/form/get/xml.cat"
+Given /^document "([^\"]*)" does not exist$/ do |docid|
+  steps %Q{
+  * I go to delete a document
+  * I fill in "Enter a docid" with "#{docid}"
+  }
 end
 
 Given /^document "([^\"]*)" exists with content$/ do |docid, string|
   steps %Q{
-  When I follow "Add document"
-  And I fill in "ditacontent" with
+  * I go to add a document
+  * I fill in "ditacontent" with
   """
   #{string}
   """
-  And I check "isTransform"
-  And I fill in "DocId" with "#{docid}"
-  And I press "Add to repository"
+  * I check "isTransform"
+  * I fill in "DocId" with "#{docid}"
+  * I press "Add to repository"
   }
 end
 
@@ -24,7 +23,7 @@ Given /^I fill in "([^\"]*)" with '(.*)'$/ do |field, string|
   fill_in(field, :with => string)
 end
 
-And /^I fill in "([^\"]*)" with$/ do |field, pystring|
+Given /^I fill in "([^\"]*)" with$/ do |field, pystring|
   fill_in(field, :with => pystring)
 end
 
@@ -36,22 +35,20 @@ Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
 end
 
 When /^I search for "([^\"]*)"$/ do |terms|
-  visit search_path
-  fill_in("query", :with => terms)
-  click_button("Search")
+  steps %Q{
+  * I go to search
+  * I fill in "query" with #{terms}
+  * I press "Search"
+  }
 end
 
 #so I can use single quotes around double-quoted search strings:
 When /^I search for '([^\']*)'$/ do |terms|
-  visit search_path
-  fill_in("query", :with => terms)
-  click_button("Search")
-end
-
-When /^I request xml for doc ([a-z]{4})$/ do |docid|
-  visit doc_xml_path
-  page.should have_css('body')
-#  click_button("Retrieve document")
+  steps %Q{
+  * I go to search
+  * I fill in "query" with #{terms}
+  * I press "Search"
+  }
 end
 
 Then /^I should see element (.*)$/ do |element|
