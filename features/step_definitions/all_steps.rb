@@ -2,6 +2,7 @@ Given /^document "([^\"]*)" does not exist$/ do |docid|
   steps %Q{
   * I go to delete a document
   * I fill in "Enter a docid" with "#{docid}"
+  * I press "Delete document"
   }
 end
 
@@ -15,6 +16,7 @@ Given /^document "([^\"]*)" exists with content$/ do |docid, string|
   * I check "isTransform"
   * I fill in "DocId" with "#{docid}"
   * I press "Add to repository"
+  * I see "Document #{docid} has been added to the repository.
   }
 end
 
