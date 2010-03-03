@@ -6,17 +6,15 @@ Given /^document "([^\"]*)" does not exist$/ do |docid|
   }
 end
 
-Given /^document "([^\"]*)" exists with content$/ do |docid, string|
+Given /^document "([^\"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
   * I go to add a document
   * I fill in "ditacontent" with
   """
-  #{string}
+  #{pystring}
   """
-  * I check "isTransform"
   * I fill in "DocId" with "#{docid}"
   * I press "Add to repository"
-  * I see "Document #{docid} has been added to the repository."
   }
 end
 
