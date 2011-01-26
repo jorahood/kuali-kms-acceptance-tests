@@ -1,7 +1,8 @@
 Acceptance test framework for the Kuali Sage project:
- * Confluence is the Feature editor,
- * Bumps pulls the Features into Cucumber and publishes junit xml report files to be consumed from the original Confluence page on which the Feature lives.
- * Browser automation using Culerity
+ * Confluence is the Feature editor, you write one feature per page and tag it with "acceptancetest"
+ * Bumps pulls the Features into Cucumber and publishes junit xml report files 
+   to be consumed with a Confluence {junit} macro on the page on which the Feature lives.
+ * Browser automation using Culerity (should look into using Selenium on a headless server for better javascript support)
 
 Notes on upgrade from Webrat driving Mechanize to Capybara driving Culerity driving Celerity driving HTMLUnit:
     1. Installed openjdk-6-jre-headless on the server
