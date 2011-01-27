@@ -3,32 +3,13 @@ module NavigationHelpers
   #
   #   When /^I go to (.+)$/ do |page_name|
   #
-  # step definition in webrat_steps.rb
+  # step definition in web_steps.rb
   #
-  def webroot
-    '/sage-stg/kms'
-  end
-
   def path_to(page_name)
     case page_name
     
     when /the homepage/
-      "#{webroot}/index.cat"
-
-    when /search/
-      "#{webroot}/form/search.cat"
-
-    when /view a document in xml/
-      "#{webroot}/form/get/xml.cat"
-
-    when /view a document in xhtml/
-      "#{webroot}/form/get/xhtml.cat"
-
-    when /add a document/
-      "#{webroot}/form/put/xml.cat"
-
-    when /delete a document/
-      "#{webroot}/form/delete/xml.cat"
+      "/"
 
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +

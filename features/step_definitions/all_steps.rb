@@ -49,3 +49,8 @@ end
 Then /^I should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
 end
+
+Given /^I am at "([^"]*)"$/ do |host|
+  Capybara.app_host = host
+  visit "/"
+end
