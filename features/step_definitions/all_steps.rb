@@ -50,7 +50,29 @@ Then /^I should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
 end
 
-Given /^I am at "([^"]*)"$/ do |host|
+Given /^I am using "([^"]*)"$/ do |host|
   Capybara.app_host = host
-  visit "/"
 end
+
+Then /^I should see doc ([a-z]{4})$/ do |docid|
+  page.should have_xpath("//a[contains(@href,'/#{docid}')]")
+end
+
+Then /^when I get the xml for doc ([a-z]{4})$/ do |docid|
+  # only with celerity driver, not selenium
+  # see http://celerity.rubyforge.org/yard/Celerity/Browser.html#credentials%3D-instance_method
+  page.driver.browser.credentials = 'kbdevtest:EKQ6JNSC5A'
+  visit "http://remote.kb.iu.edu/REST/v0.2//document/default/#{docid}.xml?domain=kbstaff"
+end
+
+Then /^there are not all of "([^"]*)" in the default qline, body or xtras$/ do |terms|
+  terms = terms.split
+  found_terms = []
+  terms.each do |term|
+    with_scope('kbml') do
+      found_terms << term if page.has_content?(term)
+    end
+  end
+  found_terms.should_not == terms
+end
+
