@@ -1,25 +1,37 @@
-Feature: Searching text in alt q-lines
+@culerity
+Feature: Searching text filtered by audience or domain
   In order to understand how searching in the current KB works, we want to try searching
-  for text that appears only in alternate q-lines (titles).
+  for text that appears only in alternate q-lines (titles), and in sections restricted to certain client domains (kbsecure).
 
-  @culerity
-  Scenario Outline: Searching with audience=default finds text in altqs for other audiences
-    Given I am using "https://kb.iu.edu"
-    And I go to the homepage
-    When I fill in "search" with "<terms>"
-    And I press "Search"
-    Then I should see doc <result_doc>
-    But when I get the xml for doc <result_doc>
-    Then there are not all of "<terms>" in the default qline, body or xtras
+  Scenario Outline: All of a doc's qlines are always searched regardless of the client's audience the client declares
+    When I search for "<query>" with audience="default" and domain="kbstaff"
+    Then I should see "tesk" within "results"
 
     Examples:
-      | terms                                        | only in altq for | result_doc |
-      | jagtag basics                                | ose              | aavs       |
-      | Sakai Discussion tool delete discussion item | sakai            | atdk       |
-      | Adding, editing, or deleting Schedule items  | oncoursecl       | aqyn       |
+      | query               |
+      | teskoncourseclqline |
+      | teskoseqline        |
+      | tesksakaiqline      |
 
-  Scenario: Searching with audience=oncoursecl finds text in mainq
+  Scenario Outline: Content within filtered elements is searched even when that element is not viewable from the client's domain
+    When I search for "<term>" with audience="default" and domain="testa"
+    Then I should see "tesk" within "results"
+    But I get the xml for doc "tesk" with audience="default" and domain="testa"
+    Then I should not see "term"
 
-  Scenario: Searching with audience=oncoursecl finds text in mainq
+    Examples:
+      | term              |
+      | teskwhokbstaff    |
+      | teskwhooncoursecl |
+      | teskwhosakai-all  |
+      | teskwhoose        |
 
-  Scenario: Searching with audience=oncoursecl finds text in oncoursecl altq
+  Scenario Outline: Content in documents that are not viewable from the client's domain is not searched
+    When I search for "teskdefaultqline" with audience="default" and domain="<domain>"
+    Then I should not see "tesk" within "results"
+
+    Examples:
+      | domain     |
+      | oncoursecl |
+      | sakai-all  |
+      | ose        |
