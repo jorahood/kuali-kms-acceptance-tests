@@ -3,7 +3,7 @@ Feature: Searching text filtered by audience or domain
   In order to understand how searching in the current KB works, we want to try searching
   for text that appears only in alternate q-lines (titles), and in sections restricted to certain client domains (kbsecure).
 
-  Scenario Outline: All of a doc's qlines are always searched regardless of the client's audience the client declares
+  Scenario Outline: All of a doc's qlines are always searched regardless of the client's audience
     When I search for "<query>" with audience="default" and domain="kbstaff"
     Then I should see "tesk" within "results"
 
@@ -23,7 +23,7 @@ Feature: Searching text filtered by audience or domain
       | term              |
       | teskwhokbstaff    |
       | teskwhooncoursecl |
-      | teskwhosakai-all  |
+      | teskwhosakaiall   |
       | teskwhoose        |
 
   Scenario Outline: Content in documents that are not viewable from the client's domain is not searched
@@ -35,3 +35,26 @@ Feature: Searching text filtered by audience or domain
       | oncoursecl |
       | sakai-all  |
       | ose        |
+
+  Scenario Outline: For quoted searches, all of a doc's qlines are always searched regardless of the client's audience
+    When I do a quoted search for "<query>" with audience="default" and domain="kbstaff"
+    Then I should see "tesk" within "results"
+
+    Examples:
+      | query                           |
+      | This is the teskoncourseclqline |
+      | This is the teskoseqline        |
+      | This is the tesksakaiqline      |
+
+  Scenario Outline: For quoted searches, content within filtered elements is searched even when that element is not viewable from the client's domain
+    When I do a quoted search for "<query>" with audience="default" and domain="testa"
+    Then I should see "tesk" within "results"
+    But I get the xml for doc "tesk" with audience="default" and domain="testa"
+    Then I should not see "query"
+
+    Examples:
+      | query                               |
+      | This paragraph is teskwhokbstaff    |
+      | This paragraph is teskwhooncoursecl |
+      | This paragraph is teskwhosakaiall   |
+      | This paragraph is teskwhoose        |

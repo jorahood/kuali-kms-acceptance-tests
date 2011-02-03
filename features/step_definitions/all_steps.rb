@@ -54,13 +54,16 @@ Given /^I am using "([^"]*)"$/ do |host|
   Capybara.app_host = host
 end
 
-Then /^I search for "([^"]*)" with audience="([^"]*)" and domain="([^"]*)"$/ do |query, audience, domain|
+When /^I search for "([^"]*)" with audience="([^"]*)" and domain="([^"]*)"$/ do |query, audience, domain|
   # driver.browser.credentials works only with celerity
   # see http://celerity.rubyforge.org/yard/Celerity/Browser.html#credentials%3D-instance_method
   page.driver.browser.credentials = 'kbdevtest:EKQ6JNSC5A'
   visit "http://remote.kb.iu.edu/REST/v0.2//search/#{audience}?query=#{query}&domain=#{domain}"
 end
 
+When /^I do a quoted search for "([^"]*)" with audience="([^"]*)" and domain="([^"]*)"$/ do |query, audience, domain|
+  steps %Q{ * I search for "%22#{query}%22" with audience="#{audience}" and domain="#{domain}" }
+end
 When /^I get the xml for doc "([a-z]{4})" with audience="([^"]*)" and domain="([^"]*)"$/ do |docid, audience, domain|
   # driver.browser.credentials works only with celerity
   page.driver.browser.credentials = 'kbdevtest:EKQ6JNSC5A'
