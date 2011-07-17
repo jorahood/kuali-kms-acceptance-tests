@@ -12,14 +12,12 @@ require 'capybara/session'
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
 Capybara.default_driver = :culerity
-Capybara.app_host = "http://cowhorn.uits.indiana.edu:8080"
+Capybara.app_host = "https://test.uisapp2.iu.edu"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
 require 'bumps'
 
 Bumps.configure do
-  pull_from 'https://uisapp2.iu.edu/confluence-prd//createrssfeed.action?types=page&sort=modified'+ 
-    '&showContent=true&spaces=Sage&labelString=acceptancetest&rssType=atom&maxResults=1000' + 
-    '&timeSpan=1000&publicFeed=true&title=Sage+Features+Automated+Acceptance+Tests&showDiff=false'
+  pull_from 'https://wiki.kuali.org/createrssfeed.action?types=page&spaces=KITS&title=Kuali+Acceptance+Tests&labelString=acceptancetest&excludedSpaceKeys%3D&sort=modified&maxResults=200&timeSpan=10000&showContent=true&confirm=Create+RSS+Feed&showDiff=false&os_authType=basic'
 end
 
 # monkey-patches to Bumps to let it parse features from Confluence and to make it not push results
