@@ -52,7 +52,7 @@ module Bumps
   end
 end
 
-if ENV["HEADLESS"] == 'true'
+if ENV["SELENIUM_HEADLESS"] == 'true'
 
   require "headless"
   Before('@selenium') do

@@ -20,4 +20,11 @@ Crontab:
     * * * * * cd /opt/apps/sage-acceptance-tests/; rm features/*.feature > /dev/null 2>&1; /opt/ruby-enterprise/bin/cucumber -p sage > /dev/null 2>&1
     0 0 * * * rm /opt/apps/sage-acceptance-tests/results/index.html; rm /opt/apps/sage-acceptance-tests/results/junit/*
 
-To run the cucumber features from the workstation rather than the server, just do cuc
+Screenshots:
+    To get screenshots of every scenario there are a few prerequisites:
+    * Be using a browser driver such as Selenium/Webdriver rather than a browser simulator like htmlunit.
+    * Run selenium on a headless server, as I am, you need to use the X-windows virtual frame buffer (Xvfb). For instructions on setting this up I used http://www.alittlemadness.com/2008/03/05/running-selenium-headless/ . Besides just installing it you have to set it up to run on a framebuffer that nothing else uses (by specifying it when starting xvfb), then make sure your Selenium process knows that it should be sending output to that framebuffer (by setting the DISPLAY env var).
+    * Install the 'headless' gem to handle communications between ruby and Selenium.
+    * Tell cucumber to start headless mode when it is running with Selenium. For this I pasted this gist into my env.rb file: https://gist.github.com/554079 . This also requires setting an env var: SELENIUM_HEADLESS
+    * Start cucumber with: SELENIUM_HEADLESS=true DISPLAY=99 cuc -p sage
+    * Create a cucumber hook to run after scenarios and embed the screenshots in the result page. For this I used Aslak's snippet here without the failed? condition: http://groups.google.com/group/cukes/browse_thread/thread/1303a62c5b40173b/4bc1bba5bd625a14?show_docid=4bc1bba5bd625a14
