@@ -6,7 +6,7 @@ module NavigationHelpers
   # step definition in webrat_steps.rb
   #
   def webroot
-    'kms-snd/portal.do'
+    '/kms-snd/portal.do'
   end
 
   def path_to(page_name)
