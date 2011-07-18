@@ -11,7 +11,7 @@ require 'capybara/session'
 # prefer to use XPath just remove this line and adjust any selectors in your
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
-Capybara.default_driver = :culerity
+Capybara.default_driver = :selenium
 Capybara.app_host = "https://test.uisapp2.iu.edu"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
 require 'bumps'
