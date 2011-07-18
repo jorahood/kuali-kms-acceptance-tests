@@ -6,14 +6,14 @@ module NavigationHelpers
   # step definition in webrat_steps.rb
   #
   def webroot
-    '/sage-stg/kms'
+    'kms-snd/portal.do'
   end
 
   def path_to(page_name)
     case page_name
     
     when /the homepage/
-      "#{webroot}/index.cat"
+      "#{webroot}"
 
     when /search/
       "#{webroot}/form/search.cat"
