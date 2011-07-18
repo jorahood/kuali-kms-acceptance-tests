@@ -51,3 +51,16 @@ module Bumps
     end
   end
 end
+
+if ENV["HEADLESS"] == 'true'
+
+  require "headless"
+  Before('@selenium') do
+    @headless = Headless.new
+    @headless.start
+  end
+
+  After('@selenium') do
+    @headless.destroy if @headless.present?
+  end
+end
