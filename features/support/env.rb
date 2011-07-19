@@ -1,4 +1,5 @@
-require 'spec/expectations'
+require 'rspec/expectations'
+World(Rspec::Matchers)
 
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
