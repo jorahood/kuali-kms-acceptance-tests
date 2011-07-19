@@ -27,10 +27,12 @@ module Bumps
     # hacked to parse Confluence-formatted user stories rather than JSON, which Bumps 0.1.1 has moved to
     def self.parse xml
       document = Nokogiri::XML xml
-      document.search('summary').collect do |feature_element|
-
-        # gsub the living hell out of the response from Confluence
-        content = feature_element.text.
+      document.search('entry').collect do |entry|
+        name = entry.search('title').text
+        dashed_name = name.gsub(/\s+/, "-")
+        # gsub the living hell out of the document from Confluence
+        feature = entry.search('summary').text
+        content = feature.
           gsub(/<(td|th)[^>]*>/,"|").             # remove table elements td and th
           gsub(/<\/tr[^>]*>\n?/,"|").
           gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,"").
@@ -45,8 +47,7 @@ module Bumps
           sub(/^.*?Feature:/m,"Feature:").
           sub(/^\s*View Online/,"")               # remove "view online" link
 
-        name = /Feature:\s*([\w ]+)/.match(content)[1].gsub(/\s+/, "-") + '.feature' or '???'
-        Feature.new(name,content)
+        Feature.new(dashed_name, content)
       end
     end
   end
