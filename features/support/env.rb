@@ -24,20 +24,29 @@ end
 # monkey-patches to Bumps to let it parse features from Confluence and to make it not push results
 module Bumps
   class RemoteFeature
-    # hacked to parse Confluence-formatted user stories
+    # hacked to parse Confluence-formatted user stories rather than JSON, which Bumps 0.1.1 has moved to
     def self.parse xml
       document = Nokogiri::XML xml
       document.search('summary').collect do |feature_element|
-        feature = Feature.new
 
-        feature.content = feature_element.text.gsub(/<(td|th)[^>]*>/,"|").gsub(
-          /<\/tr[^>]*>\n?/,"|").gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,"").gsub(/<\/?[^>]*>/, "").gsub(
-          /&nbsp;/, " ").gsub(/\!/,"|").gsub(/&#91;/, "[").gsub(/&#93;/, "]").gsub(
-          /&lt;/,"<").gsub(/&gt;/,">").gsub(/&quot;/,'"').sub(
-          /^.*?Feature:/m,"Feature:").sub(/^\s*View Online/,"")
+        # gsub the living hell out of the response from Confluence
+        content = feature_element.text.
+          gsub(/<(td|th)[^>]*>/,"|").             # remove table elements td and th
+          gsub(/<\/tr[^>]*>\n?/,"|").
+          gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,"").
+          gsub(/<\/?[^>]*>/, "").
+          gsub(/&nbsp;/, " ").
+          gsub(/\!/,"|").
+          gsub(/&#91;/, "[").
+          gsub(/&#93;/, "]").
+          gsub(/&lt;/,"<").
+          gsub(/&gt;/,">").
+          gsub(/&quot;/,'"').
+          sub(/^.*?Feature:/m,"Feature:").
+          sub(/^\s*View Online/,"")               # remove "view online" link
 
-        feature.name = /Feature:\s*([\w ]+)/.match(feature.content)[1].gsub(/\s+/, "_") + '.feature' || '???'
-        feature
+        name = /Feature:\s*([\w ]+)/.match(content)[1].gsub(/\s+/, "-") + '.feature' or '???'
+        Feature.new(name,content)
       end
     end
   end
