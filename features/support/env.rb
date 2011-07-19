@@ -1,5 +1,5 @@
 require 'rspec/expectations'
-World(Rspec::Matchers)
+World(RSpec::Matchers)
 
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
