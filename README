@@ -35,4 +35,4 @@ Screenshots:
 
     * Create a cucumber hook to run after scenarios and embed the screenshots in the result page. For this I used Aslak's snippet here without the failed? condition: http://groups.google.com/group/cukes/browse_thread/thread/1303a62c5b40173b/4bc1bba5bd625a14?show_docid=4bc1bba5bd625a14
 
-    * to save typing, I created an alias to run cucumber with the necessary environment variables set in .bashrc: alias noheadcuc="SELENIUM_HEADLESS=true DISPLAY=:99 cuc"
+    * to save typing, I created an alias called "noheadcuc" to run cucumber with the necessary environment variables set, and with the correct profile: alias noheadcuc="SELENIUM_HEADLESS=true DISPLAY=:99 cuc"
