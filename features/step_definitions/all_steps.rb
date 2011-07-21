@@ -20,8 +20,8 @@ end
 
 Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
-  * I look in the frame
   * I follow "New content"
+  * I look in the frame
   * I fill in "document.documentHeader.documentDescription" with "an automated test doc"
   * I fill in "document.kmsDocument.fileName" with "xxxx"
   * I fill in "document.kmsDocument.content" with "#{pystring}"
