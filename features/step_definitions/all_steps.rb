@@ -18,7 +18,7 @@ Given /^I am in the frame$/ do
   page.driver.browser.switch_to.frame('iframeportlet')
 end
 
-Given /^document with id "([^"]*)" exists with content$/ do |docid, pystring|
+Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
   * I go to add a document
   * I fill in "ditacontent" with #{pystring}
