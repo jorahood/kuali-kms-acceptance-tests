@@ -38,7 +38,7 @@ module Bumps
           gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,"").
           gsub(/<\/?[^>]*>/, "").
           gsub(/&nbsp;/, " ").
-          gsub(/\!/,"|").
+          gsub(/[^<]\!/,"|").                     # use exclamation points not part of a <!DOCTYPE to build cucumber tables
           gsub(/&#91;/, "[").
           gsub(/&#93;/, "]").
           gsub(/&lt;/,"<").
