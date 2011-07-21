@@ -39,6 +39,18 @@ Then /^I should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   end
 end
 
+Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? within frame "([^"]*)"$/ do |text, selector, frame|
+  within_frame(frame) do
+    with_scope(selector) do
+      if page.respond_to? :should
+        page.should have_content(text)
+      else
+        assert page.has_content?(text)
+      end
+    end
+  end
+end
+
 When /^I search for "([^"]*)"$/ do |terms|
   steps %Q{
   * I go to search
