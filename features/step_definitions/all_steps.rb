@@ -20,10 +20,12 @@ end
 
 Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
-  * I go to add a document
-  * I fill in "ditacontent" with #{pystring}
-  * I fill in "DocId" with #{docid}
-  * I press "Add to repository"
+  * I look in the frame
+  * I follow "New content"
+  * I fill in "document.documentHeader.documentDescription" with "an automated test doc"
+  * I fill in "document.kmsDocument.fileName" with "xxxx"
+  * I fill in "document.kmsDocument.content" with "#{pystring}"
+  * I press "save"
   }
 end
 
