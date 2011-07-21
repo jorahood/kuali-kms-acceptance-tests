@@ -14,6 +14,10 @@ Given /^document "([^"]*)" does not exist$/ do |docid|
   }
 end
 
+Given /^I am in the frame$/ do
+  page.driver.browser.switch_to.frame('iframeportlet')
+end
+
 Given /^document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
   * I go to add a document
@@ -36,18 +40,6 @@ Then /^I should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     content.should contain_once(regexp)
-  end
-end
-
-Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? within frame "([^"]*)"$/ do |text, selector, frame|
-  within_frame(frame) do
-    with_scope(selector) do
-      if page.respond_to? :should
-        page.should have_content(text)
-      else
-        assert page.has_content?(text)
-      end
-    end
   end
 end
 
