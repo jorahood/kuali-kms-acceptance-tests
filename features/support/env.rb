@@ -18,7 +18,7 @@ Capybara.run_server = false # to keep Capybara from starting a Rack server
 require 'bumps'
 
 Bumps.configure do
-  pull_from 'https://wiki.kuali.org/createrssfeed.action?types=page&spaces=KITS&title=Kuali+Acceptance+Tests&labelString=acceptancetest&excludedSpaceKeys%3D&sort=modified&maxResults=200&timeSpan=10000&showContent=true&confirm=Create+RSS+Feed&showDiff=false'
+  pull_from 'https://wiki.kuali.org/createrssfeed.action?types=page&spaces=KITS&labelString=acceptancetest&maxResults=2000&timeSpan=10000&showContent=true&showDiff=false'
 end
 
 # monkey-patches to Bumps to let it parse features from Confluence and to make it not push results
