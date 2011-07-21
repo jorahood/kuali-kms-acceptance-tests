@@ -14,7 +14,7 @@ Given /^document "([^"]*)" does not exist$/ do |docid|
   }
 end
 
-Given /^I am in the frame$/ do
+Given /^I look in the frame$/ do
   page.driver.browser.switch_to.frame('iframeportlet')
 end
 
