@@ -1,4 +1,12 @@
-Given /^document "([^\"]*)" does not exist$/ do |docid|
+Given /^I am logged in as "([^"]*)"$/ do |username|
+  steps %Q{
+  Given I go to the homepage
+  And I fill in "__login_user" with "#{username}"
+  And I press "Login"
+  }
+end
+
+Given /^document "([^"]*)" does not exist$/ do |docid|
   steps %Q{
   * I go to delete a document
   * I fill in "Enter a docid" with "#{docid}"
@@ -6,30 +14,32 @@ Given /^document "([^\"]*)" does not exist$/ do |docid|
   }
 end
 
-Given /^document "([^\"]*)" exists with content$/ do |docid, pystring|
-  Given "I go to add a document"
-  And 'I fill in "ditacontent" with', pystring
-  And "I fill in \"DocId\" with \"#{docid}\""
-  And  'I press "Add to repository"'
+Given /^document with id "([^"]*)" exists with content$/ do |docid, pystring|
+  steps %Q{
+  * I go to add a document
+  * I fill in "ditacontent" with #{pystring}
+  * I fill in "DocId" with #{docid}
+  * I press "Add to repository"
+  }
 end
 
 #with single quotes since we may need double quotes in the string
-Given /^I fill in "([^\"]*)" with '([^\']*)'$/ do |field, string|
+Given /^I fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
 end
 
-Given /^I fill in "([^\"]*)" with$/ do |field, pystring|
+Given /^I fill in "([^"]*)" with$/ do |field, pystring|
   fill_in(field, :with => pystring)
 end
 
-Then /^I should see "([^\"]*)" within "([^\"]*)" once$/ do |regexp, selector|
+Then /^I should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     content.should contain_once(regexp)
   end
 end
 
-When /^I search for "([^\"]*)"$/ do |terms|
+When /^I search for "([^"]*)"$/ do |terms|
   steps %Q{
   * I go to search
   * I fill in "query" with #{terms}
@@ -38,7 +48,7 @@ When /^I search for "([^\"]*)"$/ do |terms|
 end
 
 #so I can use single quotes around double-quoted search strings:
-When /^I search for '([^\']*)'$/ do |terms|
+When /^I search for '([^']*)'$/ do |terms|
   steps %Q{
   * I go to search
   * I fill in "query" with #{terms}
