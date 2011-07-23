@@ -1,3 +1,5 @@
+require 'cucumber/formatter/junit'
+
 module Cucumber
   module Formatter
     class MyJunit < Junit

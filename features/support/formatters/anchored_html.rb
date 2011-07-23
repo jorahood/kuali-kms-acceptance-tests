@@ -1,13 +1,13 @@
+require 'cucumber/formatter/html'
+
 module Cucumber
   module Formatter
     class AnchoredHtml < Html
-      def before_features(features)
-        super(features)
-        @builder.title 'KITS KMS Acceptance Tests'
-      end
 
       def before_feature(feature)
-        @builder.a(:name => feature.name)
+        super(feature)
+        lines = feature.name.split(/\r?\n/)
+        @builder.a(:name => lines[0])
       end
     end
   end
