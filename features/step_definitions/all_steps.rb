@@ -1,31 +1,34 @@
 Given /^I am logged in as "([^"]*)"$/ do |username|
   steps %Q{
   Given I go to the homepage
-  And I fill in "__login_user" with "#{username}"
-  And I press "Login"
+  * fill in "__login_user" with "#{username}"
+  And press "Login"
   }
 end
 
 Given /^document "([^"]*)" does not exist$/ do |docid|
   steps %Q{
-  * I go to delete a document
-  * I fill in "Enter a docid" with "#{docid}"
-  * I press "Delete document"
+  Given I go to delete a document
+  * fill in "Enter a docid" with "#{docid}"
+  And press "Delete document"
   }
 end
 
-Given /^I look in the frame$/ do
+Given /^(?:|I )look in the frame$/ do
   page.driver.browser.switch_to.frame('iframeportlet')
 end
 
 Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
-  * I follow "New content"
-  * I look in the frame
-  * I fill in "document.documentHeader.documentDescription" with "an automated test doc"
-  * I fill in "document.kmsDocument.fileName" with "xxxx"
-  * I fill in "document.kmsDocument.content" with "#{pystring}"
-  * I press "save"
+  Given I follow "New content"
+  * look in the frame
+  * fill in "document.documentHeader.documentDescription" with "an automated test doc"
+  * fill in "document.kmsDocument.fileName" with "xxxx"
+  * fill in "document.kmsDocument.content" with
+  """
+  #{pystring}
+  """
+  And press "save"
   }
 end
 
@@ -47,18 +50,18 @@ end
 
 When /^I search for "([^"]*)"$/ do |terms|
   steps %Q{
-  * I go to search
-  * I fill in "query" with #{terms}
-  * I press "Search"
+  Given I go to search
+  * fill in "query" with #{terms}
+  And press "Search"
   }
 end
 
 #so I can use single quotes around double-quoted search strings:
 When /^I search for '([^']*)'$/ do |terms|
   steps %Q{
-  * I go to search
-  * I fill in "query" with #{terms}
-  * I press "Search"
+  Given I go to search
+  * fill in "query" with #{terms}
+  And press "Search"
   }
 end
 
