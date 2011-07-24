@@ -7,7 +7,8 @@ module Cucumber
       def before_feature(feature)
         super(feature)
         lines = feature.name.split(/\r?\n/)
-        @builder.a(:name => lines[0])
+        dashed_name = lines[0].gsub(/\s+/, "-")
+        @builder.a(:name => dashed_name)
       end
     end
   end
