@@ -33,12 +33,12 @@ module Bumps
         # gsub the living hell out of the document from Confluence
         feature = entry.search('summary').text
         content = feature.
-          gsub(/<(td|th)[^>]*>/,"|").             # remove table elements td and th
-          gsub(/<\/tr[^>]*>\n?/,"|").
-          gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,"").
+          gsub(/<(td|th)[^>]*>/,"|").             # replace td and th with vertical bars, which cuke understands
+          gsub(/<\/tr[^>]*>\n?/,"|").             # replace tr with vertical bars, i.e., cuke tables
+          gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,""). # remove td and th close tags and tbody
           gsub(/<\/?[^>]*>/, "").
           gsub(/&nbsp;/, " ").
-          gsub(/[^<]\!/,"|").                     # use exclamation points not part of a <!DOCTYPE to build cucumber tables
+          gsub(/[^<]\!/,"|").                     # I think I can delete this line since tables are handled above
           gsub(/&#91;/, "[").
           gsub(/&#93;/, "]").
           gsub(/&lt;/,"<").
