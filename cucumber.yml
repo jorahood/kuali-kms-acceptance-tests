@@ -1,2 +1,2 @@
 default: features
-kms: --format Cucumber::Formatter::MyJunit --out results/junit --strict --format html --out results/index.html
+kms: --format Cucumber::Formatter::MyJunit --out results/junit --strict --format Cucumber::Formatter::AnchoredHtml --out results/index.html
