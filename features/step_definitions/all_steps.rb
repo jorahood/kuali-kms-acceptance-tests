@@ -1,4 +1,4 @@
-Given /^I am logged in as "([^"]*)"$/ do |username|
+Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
   steps %Q{
   Given I go to the homepage
   * fill in "__login_user" with "#{username}"
@@ -33,22 +33,22 @@ Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
 end
 
 #with single quotes since we may need double quotes in the string
-Given /^I fill in "([^"]*)" with '([^']*)'$/ do |field, string|
+Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
 end
 
-Given /^I fill in "([^"]*)" with$/ do |field, pystring|
+Given /^(?:|I )fill in "([^"]*)" with$/ do |field, pystring|
   fill_in(field, :with => pystring)
 end
 
-Then /^I should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
+Then /^(?:|I )should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     content.should contain_once(regexp)
   end
 end
 
-When /^I search for "([^"]*)"$/ do |terms|
+When /^(?:|I )search for "([^"]*)"$/ do |terms|
   steps %Q{
   Given I go to search
   * fill in "query" with #{terms}
@@ -57,7 +57,7 @@ When /^I search for "([^"]*)"$/ do |terms|
 end
 
 #so I can use single quotes around double-quoted search strings:
-When /^I search for '([^']*)'$/ do |terms|
+When /^(?:|I )search for '([^']*)'$/ do |terms|
   steps %Q{
   Given I go to search
   * fill in "query" with #{terms}
@@ -65,6 +65,6 @@ When /^I search for '([^']*)'$/ do |terms|
   }
 end
 
-Then /^I should see element (.*)$/ do |element|
+Then /^(?:|I )should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
 end
