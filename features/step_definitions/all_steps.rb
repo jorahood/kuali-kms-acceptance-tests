@@ -22,13 +22,13 @@ end
 Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
   Given I follow "New content"
-  * fill in "document.documentHeader.documentDescription" with "an automated test doc"
-  * fill in "document.kmsDocument.fileName" with "xxxx"
-  * fill in "document.kmsDocument.content" with
+  * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
+  * fill in "document.kmsDocument.fileName" with "xxxx" in the frame
+  * fill in "document.kmsDocument.content" in the frame with
   """
   #{pystring}
   """
-  And press "save"
+  And press "save" in the frame
   }
 end
 
@@ -47,6 +47,14 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
+When /^I follow the first link in the table in the frame$/ do
+  within_frame frame_id() do
+    with_scope("table tr:first-child td:first-child") do
+      click_link("") # the links all have blank title attributes
+    end
+  end
+end
+
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
   within_frame frame_id() do
     with_scope(selector) do
@@ -59,6 +67,14 @@ When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")? in the fram
   within_frame frame_id() do
     with_scope(selector) do
       fill_in(field, :with => value)
+    end
+  end
+end
+
+When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |link, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      click_link(link)
     end
   end
 end
