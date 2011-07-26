@@ -47,14 +47,6 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
-When /^I follow the first link in the table in the frame$/ do
-  within_frame frame_id() do
-    with_scope("table tr:first-child td:first-child") do
-      click_link("") # the links all have blank title attributes
-    end
-  end
-end
-
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
   within_frame frame_id() do
     with_scope(selector) do
