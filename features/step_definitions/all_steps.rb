@@ -1,3 +1,8 @@
+# the iframe id that Kuali puts all portal content within
+def frame_id
+  'iframeportlet'
+end
+
 Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
   steps %Q{
   Given I go to the homepage
@@ -14,14 +19,9 @@ Given /^document "([^"]*)" does not exist$/ do |docid|
   }
 end
 
-Given /^(?:|I )look in the frame$/ do
-  page.driver.browser.switch_to.frame('iframeportlet')
-end
-
 Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   steps %Q{
   Given I follow "New content"
-  * look in the frame
   * fill in "document.documentHeader.documentDescription" with "an automated test doc"
   * fill in "document.kmsDocument.fileName" with "xxxx"
   * fill in "document.kmsDocument.content" with
@@ -45,6 +45,18 @@ Then /^(?:|I )should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     content.should contain_once(regexp)
+  end
+end
+
+Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)") in the frame?$/ do |text, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      if page.respond_to? :should
+        page.should have_content(text)
+      else
+        assert page.has_content?(text)
+      end
+    end
   end
 end
 
