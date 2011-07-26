@@ -41,6 +41,20 @@ Given /^(?:|I )fill in "([^"]*)" with$/ do |field, pystring|
   fill_in(field, :with => pystring)
 end
 
+Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
+  within_frame frame_id() do
+    fill_in(field, :with => pystring)
+  end
+end
+
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |field, value, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      fill_in(field, :with => value)
+    end
+  end
+end
+
 Then /^(?:|I )should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   within(selector) do |content|
     regexp = Regexp.new(regexp)
@@ -48,7 +62,7 @@ Then /^(?:|I )should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
   end
 end
 
-Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)") in the frame?$/ do |text, selector|
+Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |text, selector|
   within_frame frame_id() do
     with_scope(selector) do
       if page.respond_to? :should
