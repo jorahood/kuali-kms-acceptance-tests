@@ -47,6 +47,14 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
+When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      click_button(button)
+    end
+  end
+end
+
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |field, value, selector|
   within_frame frame_id() do
     with_scope(selector) do
