@@ -32,6 +32,16 @@ Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   }
 end
 
+Given /^a (ditaval|map|topic|worklist) exists with id (\d+)$/ do |thing, id|
+  steps %Q{
+  Given I go to the homepage
+  And I follow "Document Search"
+  And I fill in "Document/Notification Id:" with "#{id}" in the frame
+  And I press "search" in the frame
+  Then I should see "1 items found." in the frame
+  }
+end
+
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
