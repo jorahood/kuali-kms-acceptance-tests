@@ -71,6 +71,23 @@ Given /^I view worklist (\d+)$/ do |id|
   }
 end
 
+Then /^CLEANUP: I remove all documents from worklist (\d+)$/ do |id|
+  steps %Q{
+  * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  }
+  # this will delete all documents in a worklist, one by one. Each gets removed via javascript instantly but
+  # the change isn't final until you click save
+  while true do
+    begin
+      click_button("Delete a Worklist Item")
+    rescue Capybara::ElementNotFound
+      click_button("save")
+      break
+    end
+  end
+
+end
+
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
