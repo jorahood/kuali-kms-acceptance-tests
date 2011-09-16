@@ -57,6 +57,14 @@ Given /^worklist (\d+) is empty$/ do |id|
   }
 end
 
+Given /^document (\d+) exists$/ do |id|
+  steps %Q{
+  When I go to "/kms-snd/document.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  Then I should see "#{id}" within "table.headerinfo"
+  And I should not see "unable to locate document"
+  }
+end
+
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
