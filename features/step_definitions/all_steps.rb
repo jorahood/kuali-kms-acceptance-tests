@@ -65,6 +65,12 @@ Given /^document (\d+) exists$/ do |id|
   }
 end
 
+Given /^I view worklist (\d+)$/ do |id|
+  steps %Q{
+  Given I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  }
+end
+
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
