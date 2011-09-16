@@ -11,7 +11,11 @@ module NavigationHelpers
 
   def path_to(page_name)
     case page_name
-    
+
+    # stolen and stripped down from http://asciicasts.com/episodes/186-pickle-with-cucumber
+    when /"(\/.+)"/
+      $1
+
     when /the homepage/
       "#{webroot}"
 

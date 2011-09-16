@@ -32,13 +32,28 @@ Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
   }
 end
 
-Given /^a (ditaval|map|topic|worklist) exists with id (\d+)$/ do |thing, id|
+Given /^I search for a (ditaval|map|topic|worklist) with id (\d+)$/ do |thing, id|
   steps %Q{
   Given I go to the homepage
   And I follow "Document Search"
   And I fill in "Document/Notification Id:" with "#{id}" in the frame
-  And I press "search" in the frame
+  When I press "search" in the frame
   Then I should see "1 items found." in the frame
+  }
+end
+
+Given /^a worklist exists with id (\d+)$/ do |id|
+  steps %Q{
+  When I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  Then I should see "#{id}" within "table.headerinfo"
+  And I should not see "Document no longer exists."
+  }
+end
+
+Given /^worklist (\d+) is empty$/ do |id|
+  steps %Q{
+  When I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  Then I should not see "1:" within "table#workListItems"
   }
 end
 
