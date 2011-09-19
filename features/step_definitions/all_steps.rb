@@ -50,13 +50,6 @@ Given /^a worklist exists with id (\d+)$/ do |id|
   }
 end
 
-Given /^worklist (\d+) is empty$/ do |id|
-  steps %Q{
-  When I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
-  Then I should not see "1:" within "table#workListItems"
-  }
-end
-
 Given /^document (\d+) exists$/ do |id|
   steps %Q{
   When I go to "/kms-snd/document.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
@@ -71,7 +64,7 @@ Given /^I view worklist (\d+)$/ do |id|
   }
 end
 
-Then /^CLEANUP: I remove all documents from worklist (\d+)$/ do |id|
+Given /^worklist (\d+) is empty$/ do |id|
   steps %Q{
   * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   }
@@ -127,10 +120,9 @@ When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |link, se
   end
 end
 
-Then /^(?:|I )should see "([^"]*)" within "([^"]*)" once$/ do |regexp, selector|
-  within(selector) do |content|
-    regexp = Regexp.new(regexp)
-    content.should contain_once(regexp)
+Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? once$/ do |string, selector|
+  with_scope(selector) do
+    page.should contain_once(string)
   end
 end
 

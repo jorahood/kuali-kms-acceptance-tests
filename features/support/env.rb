@@ -1,4 +1,17 @@
 require 'rspec/expectations'
+
+#define a customer matcher
+RSpec::Matchers.define :contain_once do |string|
+  match do |page|
+      # see documentation of Capybara::Node::Matchers#has_selector?
+      page.has_selector?(:xpath, '*', :text => string, :count => 1)
+  end
+
+  failure_message_for_should do |page|
+    "expected to see '#{string}' exactly once"
+  end
+end
+
 World(RSpec::Matchers)
 
 # Comment out the next line if you don't want Cucumber Unicode support
