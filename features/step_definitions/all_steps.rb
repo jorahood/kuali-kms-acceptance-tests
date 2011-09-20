@@ -78,6 +78,15 @@ Given /^worklist (\d+) is empty$/ do |id|
       break
     end
   end
+end
+
+Given /^worklist (\d+) contains document (\d+)$/ do |worklist_id, doc_id|
+  steps %Q{
+    * worklist #{worklist_id} is empty
+    * I fill in "newWorkListItem.documentId" with "#{doc_id}"
+    * I press "Add a Worklist Item"
+    * I press "save"
+  }
 
 end
 
