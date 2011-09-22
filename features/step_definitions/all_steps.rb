@@ -4,7 +4,7 @@ def frame_id
 end
 
 Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
-  steps %Q{
+  steps %{
   Given I go to the homepage
   * fill in "__login_user" with "#{username}"
   And press "Login"
@@ -12,18 +12,18 @@ Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
 end
 
 Given /^document "([^"]*)" does not exist$/ do |docid|
-  steps %Q{
+  steps %{
   Given I go to delete a document
   * fill in "Enter a docid" with "#{docid}"
   And press "Delete document"
   }
 end
 
-Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
-  steps %Q{
+Given /^a document with id "([^"]*)" has content$/ do |docid, pystring|
+  steps %{
   Given I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
-  * fill in "document.kmsDocument.fileName" with "xxxx" in the frame
+  * fill in "document.kmsDocument.fileName" with "#{docid}" in the frame
   * fill in "document.kmsDocument.content" in the frame with
   """
   #{pystring}
@@ -33,7 +33,7 @@ Given /^a document with id "([^"]*)" exists with content$/ do |docid, pystring|
 end
 
 Given /^I search for a (ditaval|map|topic|worklist) with id (\d+)$/ do |thing, id|
-  steps %Q{
+  steps %{
   Given I go to the homepage
   And I follow "Document Search"
   And I fill in "Document/Notification Id:" with "#{id}" in the frame
@@ -43,7 +43,7 @@ Given /^I search for a (ditaval|map|topic|worklist) with id (\d+)$/ do |thing, i
 end
 
 Given /^a worklist exists with id (\d+)$/ do |id|
-  steps %Q{
+  steps %{
   When I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   Then I should see "#{id}" within "table.headerinfo"
   And I should not see "Document no longer exists."
@@ -51,7 +51,7 @@ Given /^a worklist exists with id (\d+)$/ do |id|
 end
 
 Given /^document (\d+) exists$/ do |id|
-  steps %Q{
+  steps %{
   When I go to "/kms-snd/document.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   Then I should see "#{id}" within "table.headerinfo"
   And I should not see "unable to locate document"
@@ -59,13 +59,13 @@ Given /^document (\d+) exists$/ do |id|
 end
 
 Given /^I view worklist (\d+)$/ do |id|
-  steps %Q{
+  steps %{
   Given I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   }
 end
 
 Given /^worklist (\d+) is empty$/ do |id|
-  steps %Q{
+  steps %{
   * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   }
   # this will delete all documents in a worklist, one by one. Each gets removed via javascript instantly but
@@ -80,25 +80,34 @@ Given /^worklist (\d+) is empty$/ do |id|
   end
 end
 
-Given /^worklist (\d+) contains document (\d+)$/ do |worklist_id, doc_id, table|
-  steps %Q{
-    * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"
-    * I fill in "newWorkListItem.documentId" with "#{doc_id}"
+Given /^worklist (\d+) contains the following documents with metadata:$/ do |worklist_id, docs|
+  docs.hashes.each do |doc|
+    steps %{
+    * document #{doc[:id]} exists
+    * fill in "document.kmsDocument.content" with
+    """
+    <topic id="kbdoc">
+      <prolog>
+        <author>#{doc[:author]}</author>
+      </prolog>
+      <title id="default">Content id: #{doc[:id]}</title>
+    </topic>
+    """
+    * press "save"
+    }
+  end
+  And "worklist #{worklist_id} contains the following documents:", docs
+end
+
+Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs|
+    Given %{I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"}
+    docs.hashes.each do |doc|
+    steps %{
+    * I fill in "newWorkListItem.documentId" with "#{doc[:id]}"
     * I press "Add a Worklist Item"
-    * I press "save"
-  }
-end
-
-Given /^the following documents exist:$/ do |table|
-  table.hashes.each do |doc|
-    Given "document #{doc[:id]} exists"
+    }
   end
-end
-
-Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, table|
-  table.hashes.each do |doc|
-    Given "worklist #{worklist_id} contains document #{doc[:id]}"
-  end
+  And %{I press "save"}
 end
 
 #with single quotes since we may need double quotes in the string
@@ -159,7 +168,7 @@ Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |text
 end
 
 When /^(?:|I )search for "([^"]*)"$/ do |terms|
-  steps %Q{
+  steps %{
   Given I go to search
   * fill in "query" with #{terms}
   And press "Search"
@@ -168,7 +177,7 @@ end
 
 #so I can use single quotes around double-quoted search strings:
 When /^(?:|I )search for '([^']*)'$/ do |terms|
-  steps %Q{
+  steps %{
   Given I go to search
   * fill in "query" with #{terms}
   And press "Search"
