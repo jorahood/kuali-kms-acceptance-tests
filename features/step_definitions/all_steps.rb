@@ -80,14 +80,25 @@ Given /^worklist (\d+) is empty$/ do |id|
   end
 end
 
-Given /^worklist (\d+) contains document (\d+)$/ do |worklist_id, doc_id|
+Given /^worklist (\d+) contains document (\d+)$/ do |worklist_id, doc_id, table|
   steps %Q{
-    * worklist #{worklist_id} is empty
+    * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"
     * I fill in "newWorkListItem.documentId" with "#{doc_id}"
     * I press "Add a Worklist Item"
     * I press "save"
   }
+end
 
+Given /^the following documents exist:$/ do |table|
+  table.hashes.each do |doc|
+    Given "document #{doc[:id]} exists"
+  end
+end
+
+Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, table|
+  table.hashes.each do |doc|
+    Given "worklist #{worklist_id} contains document #{doc[:id]}"
+  end
 end
 
 #with single quotes since we may need double quotes in the string
