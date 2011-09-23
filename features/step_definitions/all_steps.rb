@@ -110,6 +110,16 @@ Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs
   And %{I press "save"}
 end
 
+Given /^the worklist displays the author column$/ do
+  check('Author:')
+  click_button('save')
+end
+
+When /^I sort the worklist by author$/ do
+  # see Capybara::Node::Finders#find
+  page.find('th.header', :text => 'Author').click
+end
+
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
@@ -186,4 +196,10 @@ end
 
 Then /^(?:|I )should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
+end
+
+Then /^the documents should appear in this order:$/ do |docs|
+  docs.hashes.each_with_index do |doc, i|
+    steps %{Then I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
+  end
 end
