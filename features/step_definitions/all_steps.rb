@@ -115,11 +115,6 @@ Given /^the worklist displays the author column$/ do
   click_button('save')
 end
 
-When /^I sort the worklist by author$/ do
-  # see Capybara::Node::Finders#find
-  page.find('th.header', :text => 'Author').click
-end
-
 #with single quotes since we may need double quotes in the string
 Given /^(?:|I )fill in "([^"]*)" with '([^']*)'$/ do |field, string|
   fill_in(field, :with => string)
@@ -133,6 +128,24 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   within_frame frame_id() do
     fill_in(field, :with => pystring)
   end
+end
+
+When /^I sort the worklist by author$/ do
+  # see Capybara::Node::Finders#find
+  page.find('th.header', :text => 'Author').click
+end
+
+When /^I set this sort order as default$/ do
+  check('saveCurrentSortOrder')
+  click_button('save')
+end
+
+When /^I sort the worklist by content id$/ do
+  page.find('th.header', :text => 'Content id').click
+end
+
+When /^I reload the worklist$/ do
+  click_button('reload')
 end
 
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
@@ -202,4 +215,8 @@ Then /^the documents should appear in this order:$/ do |docs|
   docs.hashes.each_with_index do |doc, i|
     steps %{Then I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
   end
+end
+
+Then /^the worklist should be sorted by author$/ do
+  Then %{I should see "Author" within "th.headerSortDown"}
 end
