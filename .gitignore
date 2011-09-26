@@ -1,5 +1,4 @@
 *.log
-*.feature
 results/
 results/index.html
 index.html

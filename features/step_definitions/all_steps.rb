@@ -251,7 +251,9 @@ Then /^the documents should appear in this order:$/ do |docs|
 end
 
 Then /^the worklist should be sorted by author$/ do
-  #tell Capybara to wait until the sorted header is updated
-  find('th.headerSortDown')
-  Then %{I should see "Author" within "th.headerSortDown"}
+  within_frame frame_id() do
+    #tell Capybara to wait until the sorted header is updated
+    find('th.headerSortDown')
+    Then %{I should see "Author" within "th.headerSortDown"}
+  end
 end

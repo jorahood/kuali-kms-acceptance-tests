@@ -49,7 +49,16 @@ Then the documents should appear in this order:
 
 Scenario: Setting a default sort order for one column
 
-Given the worklist contains the following documents:
+Given I am logged in as "editor1"
+And the following documents exist with metadata:
+
+
+| id | author |
+| 3950 | bob |
+
+
+And a new worklist
+And the worklist contains the following documents:
 
 
 | id |
