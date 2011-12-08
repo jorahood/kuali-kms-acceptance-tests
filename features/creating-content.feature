@@ -10,14 +10,14 @@ Scenario: All form fields that I must complete for a new document are marked wit
 Given I am logged in as "editor1"
 When I follow "New content"
 Then I should see "*" within "label[for='document.documentHeader.documentDescription']" in the frame
-And I should see "*" within "label[for='document.kmsDocument.fileName']" in the frame
+And I should see "*" within "label[for='document.kmsDocument.kmsFileName.fileName']" in the frame
 
 Scenario: I can add a new doc
 
 Given I am logged in as "editor1"
 When I follow "New content"
 And I fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
-And I fill in "document.kmsDocument.fileName" with "xxxx" in the frame
+And I fill in "document.kmsDocument.kmsFileName.fileName" with "xxxx" in the frame
 And I fill in "document.kmsDocument.content" in the frame with
 """
 <task id="kbdoc">

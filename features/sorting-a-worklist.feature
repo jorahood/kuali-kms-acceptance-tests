@@ -4,25 +4,29 @@ In order to arrange documents in useful orders and switch between different orde
 As a KMS maintainer
 I want to be able to sort the documents in a worklist by any column in ascending and descending order, and by multiple columns
 
-Scenario: Sorting on one column ascending and descending
+Background:
+
 Given I am logged in as "editor1"
-And the following documents exist with metadata:
+
+Scenario: Sorting on one column ascending and descending
+
+Given the following documents exist with metadata:
 
 
-| id | author |
-| 3950 | bob |
-| 3948 | andy |
-| 3949 | chuck |
+| filename | author |
+| xxxb  | bob |
+| xxxa  | andy |
+| xxxc  | chuck |
 
 
 And a new worklist
 And the worklist contains the following documents:
 
 
-| id |
-| 3950 |
-| 3948 |
-| 3949 |
+| filename |
+| xxxa |
+| xxxb |
+| xxxc |
 
 
 And the worklist displays the author column
@@ -30,26 +34,25 @@ When I sort the worklist by author
 Then the documents should appear in this order:
 
 
-| id | author |
-| 3948 | andy |
-| 3950 | bob |
-| 3949 | chuck |
+| filename | author |
+| xxxa | andy |
+| xxxb | bob |
+| xxxc | chuck |
 
 
 And I sort the worklist by author
 Then the documents should appear in this order:
 
 
-| id | author |
-| 3949 | chuck |
-| 3950 | bob |
-| 3948 | andy |
+| filename  | author |
+| xxxc | chuck |
+| xxxb | bob |
+| xxxa | andy |
 
 
 
 Scenario: Setting a default sort order for one column
 
-Given I am logged in as "editor1"
 And the following documents exist with metadata:
 
 

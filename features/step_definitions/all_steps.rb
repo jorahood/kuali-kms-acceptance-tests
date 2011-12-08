@@ -19,11 +19,12 @@ Given /^document "([^"]*)" does not exist$/ do |docid|
   }
 end
 
-Given /^a document with id "([^"]*)" has content$/ do |docid, pystring|
+Given /^a document with filename "([^"]*)" has content$/ do |filename, pystring|
   steps %{
+  Given I go to "/kms-snd/portal.do?selectedTab=main"
   Given I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
-  * fill in "document.kmsDocument.fileName" with "#{docid}" in the frame
+  * fill in "document.kmsDocument.fileName" with "#{filename}" in the frame
   * fill in "document.kmsDocument.content" in the frame with
   """
   #{pystring}
@@ -50,12 +51,12 @@ Given /^a worklist exists with id (\d+)$/ do |id|
   }
 end
 
-Given /^document (\d+) exists$/ do |id|
+Given /^document "([^"]*)" exists$/ do |filename|
   steps %{
-  When I go to "/kms-snd/document.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
-  Then I should see "#{id}" within "table.headerinfo"
-  And I should not see "unable to locate document"
-  }
+  When I go to "/kms-snd/portal.do?selectedTab=main"
+  And I follow "New content"
+  * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
+  * fill in "document.kmsDocument.kmsFileName.fileName" with "#{filename}" in the frame  }
 end
 
 Given /^I view worklist (\d+)$/ do |id|
@@ -83,8 +84,8 @@ end
 Given /^the following documents exist with metadata:$/ do |docs|
   docs.hashes.each do |doc|
     steps %{
-    * document #{doc[:id]} exists
-    * fill in "document.kmsDocument.content" with
+    * document "#{doc[:filename]}" exists
+    * fill in "document.kmsDocument.content" in the frame with
     """
     <topic id="kbdoc">
       <prolog>
@@ -93,7 +94,7 @@ Given /^the following documents exist with metadata:$/ do |docs|
       <title id="default">Content id: #{doc[:id]}</title>
     </topic>
     """
-    * press "save"
+    * press "save" in the frame
     }
   end
 end
@@ -108,7 +109,7 @@ end
 Given /^the worklist contains the following documents:$/ do |docs|
   docs.hashes.each do |doc|
     steps %{
-    * I fill in "newWorkListItem.documentId" with "#{doc[:id]}" in the frame
+    * I fill in "newWorkListItem.newFileName" with "#{doc[:filename]}" in the frame
     * I press "Add a Worklist Item" in the frame
     }
   end
