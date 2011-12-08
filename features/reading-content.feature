@@ -10,8 +10,8 @@ Given I am logged in as "editor1"
 And a document with id "xxxx" exists with content
 """
 <topic id="kbdoc">
-  <title id="default">How can I contact the Support Center at each IU campus for help?
-  </title>
+<title id="default">How can I contact the Support Center at each IU campus for help?
+</title>
 </topic>
 """
 When I follow "Document Search"
