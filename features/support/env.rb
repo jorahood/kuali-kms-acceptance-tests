@@ -16,7 +16,6 @@ World(RSpec::Matchers)
 
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
-require 'cucumber/web/tableish' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
 
 require 'capybara/cucumber'
 require 'capybara/session'
@@ -26,6 +25,7 @@ require 'capybara/session'
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
 Capybara.default_driver = :selenium
+Capybara.default_wait_time = 10
 Capybara.app_host = "https://test.uisapp2.iu.edu"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
 require 'bumps'
