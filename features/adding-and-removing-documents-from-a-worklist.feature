@@ -7,31 +7,29 @@ And a worklist exists with id 3090
 And worklist 3090 is empty
 When I add document "xxxx" to the worklist
 And I press "save"
-Then I should see "xxxx"
+Then I should see document "xxxx"
 
 Scenario: I cannot add the same document twice
 
 Given I am logged in as "editor1"
 And a worklist exists with id 3090
 And worklist 3090 is empty
-And I fill in "newWorkListItem.documentId" with "36"
-And I press "Add a Worklist Item"
-When I fill in "newWorkListItem.documentId" with "36"
-And I press "Add a Worklist Item"
+And I add document "xxxx" to the worklist
+And I press "save"
+And I add document "xxxx" to the worklist
 Then I should see "Duplicate entries not allowed in worklist"
 And I press "save"
-Then I should see "36" within "#workListItems" once
+Then I should see document "xxxx" once
 
 Scenario: I can remove a document from a worklist
 
 Given I am logged in as "editor1"
 And a worklist exists with id 3090
 And worklist 3090 is empty
-When I fill in "newWorkListItem.documentId" with "36"
-And I press "Add a Worklist Item"
+When I add document "xxxx" to the worklist
 And I press "save"
 And I press "Delete a Worklist Item"
 And I press "save"
-Then I should not see "36" within "#workListItems"
+Then I should not see document "xxxx"
 
            

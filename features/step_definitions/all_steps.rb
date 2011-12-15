@@ -159,7 +159,6 @@ end
 When /^I add document "([^"]*)" to the worklist$/ do |filename|
   fill_in('newWorkListItem.newFileName', :with => filename)
   click_button('Add a Worklist Item')
-  click_button('save')
 end
 
 When /^I sort the worklist by content id$/ do
@@ -263,4 +262,17 @@ Then /^the worklist should be sorted by author$/ do
     find('th.headerSortDown')
     Then %{I should see "Author" within "th.headerSortDown"}
   end
+end
+
+Then /^I should see document "([^"]*)"$/ do |filename|
+  steps %{Then I should see "#{filename}" within "#workListItems"}
+end
+
+Then /^I should not see document "([^"]*)"$/ do |filename|
+  steps %{Then I should not see "#{filename}" within "#workListItems"}
+end
+
+
+Then /^I should see document "([^"]*)" once$/ do |filename|
+  page.should contain_once(filename)
 end
