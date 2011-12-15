@@ -5,10 +5,9 @@ Scenario: I can add a document to a worklist
 Given I am logged in as "editor1"
 And a worklist exists with id 3090
 And worklist 3090 is empty
-When I fill in "newWorkListItem.documentId" with "36"
-And I press "Add a Worklist Item"
+When I add document "xxxx" to the worklist
 And I press "save"
-Then I should see "36"
+Then I should see "xxxx"
 
 Scenario: I cannot add the same document twice
 

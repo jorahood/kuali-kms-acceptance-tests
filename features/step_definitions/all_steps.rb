@@ -156,6 +156,12 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
+When /^I add document "([^"]*)" to the worklist$/ do |filename|
+  fill_in('newWorkListItem.newFileName', :with => filename)
+  click_button('Add a Worklist Item')
+  click_button('save')
+end
+
 When /^I sort the worklist by content id$/ do
   within_frame frame_id() do
     find('th.header', :text => 'Content id').click
