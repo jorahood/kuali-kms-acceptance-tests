@@ -102,7 +102,7 @@ end
 Given /^a new worklist$/ do
   within_frame frame_id() do
     click_link('New worklist')
-    fill_in('Description', :with => "another test list")
+  fill_in('document.documentHeader.documentDescription', :with => "another test list")
   end
 end
 
