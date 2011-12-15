@@ -100,8 +100,8 @@ Given /^the following documents exist with metadata:$/ do |docs|
 end
 
 Given /^a new worklist$/ do
-  click_link('New worklist')
   within_frame frame_id() do
+    click_link('New worklist')
     fill_in('Description', :with => "another test list")
   end
 end
