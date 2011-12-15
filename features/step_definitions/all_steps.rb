@@ -102,18 +102,21 @@ end
 Given /^a new worklist$/ do
   within_frame frame_id() do
     click_link('New worklist')
-  fill_in('document.documentHeader.documentDescription', :with => "another test list")
+  end
+    within_frame frame_id() do
+    fill_in('document.documentHeader.documentDescription', :with => "another test list")
   end
 end
 
 Given /^the worklist contains the following documents:$/ do |docs|
   docs.hashes.each do |doc|
     steps %{
-    * I fill in "newWorkListItem.newFileName" with "#{doc[:filename]}" in the frame
-    * I press "Add a Worklist Item" in the frame
+    * I fill in "newWorkListItem.newFileName" with "#{doc[:filename]}"
     }
+    click_button("Add a Worklist Item")
+
   end
-  And %{I press "save" in the frame}
+  click_button('save')
 end
 
 Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs|
@@ -128,17 +131,13 @@ Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs
 end
 
 Given /^the worklist displays the author column$/ do
-  within_frame frame_id() do
     check('Author:')
     click_button('save')
-  end
 end
 
 Given /^the worklist displays the owner column$/ do
-  within_frame frame_id() do
     check('Owner:')
     click_button('save')
-  end
 end
 
 #with single quotes since we may need double quotes in the string
@@ -162,29 +161,21 @@ When /^I add document "([^"]*)" to the worklist$/ do |filename|
 end
 
 When /^I sort the worklist by content id$/ do
-  within_frame frame_id() do
     find('th.header', :text => 'Content id').click
-  end
 end
 
 When /^I sort the worklist by author$/ do
   # see Capybara::Node::Finders#find
-  within_frame frame_id() do
     find('th.header', :text => 'Author').click
-  end
 end
 
 When /^I set this sort order as default$/ do
-  within_frame frame_id() do
     check('saveCurrentSortOrder')
     click_button('save')
-  end
 end
 
 When /^I reload the worklist$/ do
-  within_frame frame_id() do
     click_button('reload')
-  end
 end
 
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
@@ -252,16 +243,14 @@ end
 
 Then /^the documents should appear in this order:$/ do |docs|
   docs.hashes.each_with_index do |doc, i|
-    steps %{Then I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})" in the frame}
+    steps %{Then I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
   end
 end
 
 Then /^the worklist should be sorted by author$/ do
-  within_frame frame_id() do
     #tell Capybara to wait until the sorted header is updated
-    find('th.headerSortDown')
-    Then %{I should see "Author" within "th.headerSortDown"}
-  end
+    wait_until{ page.has_content?('th.headerSortDown')}
+    step %{I should see "Author" within "th.headerSortDown"}
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|
