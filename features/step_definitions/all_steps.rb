@@ -81,6 +81,16 @@ Given /^worklist (\d+) is empty$/ do |id|
   end
 end
 
+Given /^a document with filename "([^"]*)" exists with content$/ do |filename, string|
+  steps %{
+    * document "#{filename}" exists
+    * fill in "document.kmsDocument.content" in the frame with
+    """
+    #{string}
+    """
+    * press "save" in the frame}
+end
+
 Given /^the following documents exist with metadata:$/ do |docs|
   docs.hashes.each do |doc|
     steps %{
@@ -103,7 +113,7 @@ Given /^a new worklist$/ do
   within_frame frame_id() do
     click_link('New worklist')
   end
-    within_frame frame_id() do
+  within_frame frame_id() do
     fill_in('document.documentHeader.documentDescription', :with => "another test list")
   end
 end
@@ -131,13 +141,13 @@ Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs
 end
 
 Given /^the worklist displays the author column$/ do
-    check('Author:')
-    click_button('save')
+  check('Author:')
+  click_button('save')
 end
 
 Given /^the worklist displays the owner column$/ do
-    check('Owner:')
-    click_button('save')
+  check('Owner:')
+  click_button('save')
 end
 
 #with single quotes since we may need double quotes in the string
@@ -155,33 +165,52 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
+When /^I edit the "([^"]*)" branch of the document with filename "([^"]*)"$/ do |branch, filename|
+  within_frame frame_id() do
+    fill_in('fileNameInput', :with => filename)
+    #click the filename in the dropdown created via javascript
+    find('div.dropItem', :text => "/#{filename}").click
+    select(branch, :from => 'branchIdForFilenameDivSelect')
+    click_button('submit')
+  end
+
+end
+
 When /^I add document "([^"]*)" to the worklist$/ do |filename|
   fill_in('newWorkListItem.newFileName', :with => filename)
   click_button('Add a Worklist Item')
 end
 
 When /^I sort the worklist by content id$/ do
-    find('th.header', :text => 'Content id').click
+  find('th.header', :text => 'Content id').click
 end
 
 When /^I sort the worklist by author$/ do
   # see Capybara::Node::Finders#find
-    find('th.header', :text => 'Author').click
+  find('th.header', :text => 'Author').click
 end
 
 When /^I set this sort order as default$/ do
-    check('saveCurrentSortOrder')
-    click_button('save')
+  check('saveCurrentSortOrder')
+  click_button('save')
 end
 
 When /^I reload the worklist$/ do
-    click_button('reload')
+  click_button('reload')
 end
 
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
   within_frame frame_id() do
     with_scope(selector) do
       click_button(button)
+    end
+  end
+end
+
+When /^(?:|I )select "([^"]*)" from "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |value, field, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      select(value, :from => field)
     end
   end
 end
@@ -248,9 +277,9 @@ Then /^the documents should appear in this order:$/ do |docs|
 end
 
 Then /^the worklist should be sorted by author$/ do
-    #tell Capybara to wait until the sorted header is updated
-    wait_until{ page.has_content?('th.headerSortDown')}
-    step %{I should see "Author" within "th.headerSortDown"}
+  #tell Capybara to wait until the sorted header is updated
+  wait_until{ page.has_content?('th.headerSortDown')}
+  step %{I should see "Author" within "th.headerSortDown"}
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|
