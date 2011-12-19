@@ -54,8 +54,8 @@ end
 Given /^a document with filename "([^"]*)" exists$/ do |filename|
   name,extension = filename.split('.')
   steps %{
-  When I go to "/kms-snd/portal.do?selectedTab=main"
-  And I follow "New content"
+  * I follow "Main Menu"
+  * I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
   * fill in "document.kmsDocument.kmsFileName.fileName" with "#{name}" in the frame
   * I select "#{extension}" from "document.kmsDocument.kmsFileName.fileTypeCode" in the frame}
@@ -89,11 +89,12 @@ Given /^a document with filename "([^"]*)" exists with content$/ do |filename, s
     * fill in "document.kmsDocument.content" in the frame with
     """
     #{string}
-    """}
-  within_frame frame_id() do
-    click_button('save')
-  end
-
+    """
+    * press "save" in the frame
+  }
+#  within_frame frame_id() do
+#    wait_until { page.has_content?('save')}
+#  end
 end
 
 Given /^the following documents exist with metadata:$/ do |docs|
@@ -194,6 +195,7 @@ end
 
 When /^I preview the document$/ do
   within_frame frame_id() do
+    sleep 30 # give the poller time to render
     find('#previewDocument').click
   end
 end
@@ -288,7 +290,7 @@ When /^(?:|I )search for '([^']*)'$/ do |terms|
   }
 end
 
-Then /^I should see "([^"]*)" in the popup window$/ do |string|
+Then /^I should see "([^"]*)" in the preview window$/ do |string|
   # from http://blog.kshitizgurung.info/2011/07/detecting-popup-window-and-implementing-test-on-in-capybara-selenium/
   within_window(page.driver.browser.window_handles.last) do
     page.should have_content(string)

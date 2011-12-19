@@ -65,7 +65,6 @@ module Bumps
           gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,""). # remove td and th close tags and tbody
           gsub(/<\/?[^>]*>/, "").
           gsub(/&nbsp;/, " ").
-          gsub(/[^<]\!/,"|").                     # I think I can delete this line since tables are handled above
           gsub(/&#91;/, "[").
           gsub(/&#93;/, "]").
           gsub(/&lt;/,"<").
