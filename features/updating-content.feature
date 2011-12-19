@@ -14,7 +14,7 @@ And a document with filename "xxxx" exists with content
 When I go to the homepage
 And I follow "Edit content"
 And I edit the "trunk" branch of the document with filename "xxxx"
-And I fill in "document.kmsDocument.content" in the frame with
+And I edit the content of the document to be
 """
 <topic id="kbdoc"><title id="default">At IU, what is OneStart???</title><body><p>Topic paragraph</p></body></topic>
 """

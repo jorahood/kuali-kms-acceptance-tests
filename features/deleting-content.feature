@@ -8,7 +8,7 @@ I want to be able to delete existing documents
 Scenario: I can delete a doc
 
 Given I am logged in as "editor1"
-And a document with id "xxxx" exists with content
+And a document with filename "xxxx" exists with content
 """
 <topic id="ajpt-dmm2">
 <title id="default">At IU, what is OneStart???</title>

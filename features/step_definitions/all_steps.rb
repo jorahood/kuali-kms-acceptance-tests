@@ -51,12 +51,14 @@ Given /^a worklist exists with id (\d+)$/ do |id|
   }
 end
 
-Given /^document "([^"]*)" exists$/ do |filename|
+Given /^a document with filename "([^"]*)" exists$/ do |filename|
+  name,extension = filename.split('.')
   steps %{
   When I go to "/kms-snd/portal.do?selectedTab=main"
   And I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
-  * fill in "document.kmsDocument.kmsFileName.fileName" with "#{filename}" in the frame  }
+  * fill in "document.kmsDocument.kmsFileName.fileName" with "#{name}" in the frame
+  * I select "#{extension}" from "document.kmsDocument.kmsFileName.fileTypeCode" in the frame}
 end
 
 Given /^I view worklist (\d+)$/ do |id|
@@ -83,18 +85,21 @@ end
 
 Given /^a document with filename "([^"]*)" exists with content$/ do |filename, string|
   steps %{
-    * document "#{filename}" exists
+    * a document with filename "#{filename}" exists
     * fill in "document.kmsDocument.content" in the frame with
     """
     #{string}
-    """
-    * press "save" in the frame}
+    """}
+  within_frame frame_id() do
+    click_button('save')
+  end
+
 end
 
 Given /^the following documents exist with metadata:$/ do |docs|
   docs.hashes.each do |doc|
     steps %{
-    * document "#{doc[:filename]}" exists
+    * a document with filename "#{doc[:filename]}" exists
     * fill in "document.kmsDocument.content" in the frame with
     """
     <topic id="kbdoc">
@@ -137,7 +142,7 @@ Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs
     * I press "Add a Worklist Item"
     }
   end
-  And %{I press "save"}
+  step %{I press "save"}
 end
 
 Given /^the worklist displays the author column$/ do
@@ -165,6 +170,12 @@ Given /^(?:|I )fill in "([^"]*)" in the frame with$/ do |field, pystring|
   end
 end
 
+Given /^I fill in the sample dita content$/ do
+  within_frame frame_id() do
+    find('kmsSampleTopic').click
+  end
+end
+
 When /^I edit the "([^"]*)" branch of the document with filename "([^"]*)"$/ do |branch, filename|
   within_frame frame_id() do
     fill_in('fileNameInput', :with => filename)
@@ -173,7 +184,18 @@ When /^I edit the "([^"]*)" branch of the document with filename "([^"]*)"$/ do 
     select(branch, :from => 'branchIdForFilenameDivSelect')
     click_button('submit')
   end
+end
 
+When /^I edit the content of the document to be$/ do |content|
+  within_frame frame_id() do
+    fill_in("document.kmsDocument.content", :with => content)
+  end
+end
+
+When /^I preview the document$/ do
+  within_frame frame_id() do
+    find('#previewDocument').click
+  end
 end
 
 When /^I add document "([^"]*)" to the worklist$/ do |filename|
@@ -266,6 +288,12 @@ When /^(?:|I )search for '([^']*)'$/ do |terms|
   }
 end
 
+Then /^I should see "([^"]*)" in the popup window$/ do |string|
+  within_window(page.driver.browser.window_handles.last) do
+    page.should have_content(string)
+  end
+end
+
 Then /^(?:|I )should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
 end
@@ -290,7 +318,12 @@ Then /^I should not see document "([^"]*)"$/ do |filename|
   steps %{Then I should not see "#{filename}" within "#workListItems"}
 end
 
-
 Then /^I should see document "([^"]*)" once$/ do |filename|
   page.should contain_once(filename)
+end
+
+Then /^show me the frame$/ do
+  within_frame frame_id() do
+    save_and_open_page
+  end
 end

@@ -28,6 +28,20 @@ Capybara.default_driver = :selenium
 Capybara.default_wait_time = 10
 Capybara.app_host = "https://test.uisapp2.iu.edu"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
+
+#slo-mo hack from http://stackoverflow.com/questions/3876412/capybara-doesnt-recognize-dynamically-added-dom-elements
+   require 'selenium-webdriver'
+
+   module ::Selenium::WebDriver::Remote
+     class Bridge
+       def execute(*args)
+         res = raw_execute(*args)['value']
+         sleep 0
+         res
+       end
+     end
+   end
+
 require 'bumps'
 
 Bumps.configure do
