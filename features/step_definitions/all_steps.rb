@@ -92,9 +92,9 @@ Given /^a document with filename "([^"]*)" exists with content$/ do |filename, s
     """
     * press "save" in the frame
   }
-#  within_frame frame_id() do
-#    wait_until { page.has_content?('save')}
-#  end
+  within_frame frame_id() do
+    wait_until { page.has_content?('save')}
+  end
 end
 
 Given /^the following documents exist with metadata:$/ do |docs|

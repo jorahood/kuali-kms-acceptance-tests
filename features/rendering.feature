@@ -4,7 +4,7 @@ Background:
 Given I am logged in as "editor1"
 
 Scenario: I can render a DITA-OT sample document
-Given a document with filename "xxag.dita" exists with content
+Given a document with filename "xxah.dita" exists with content
 """
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd">
@@ -32,12 +32,12 @@ Given a document with filename "xxag.dita" exists with content
     </body>
 </topic>
 """
-And a document with filename "xxag.ditamap" exists with content
+And a document with filename "xxah.ditamap" exists with content
 """
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "http://docs.oasis-open.org/dita/v1.2/os/dtd1.2/technicalContent/dtd/map.dtd">
 <map>
-    <topicref keys="xxxx" href="xxxx.dita#kbdoc"></topicref>
+    <topicref keys="xxah" href="xxah.dita#kbdoc"></topicref>
     <reltable>
         <relheader>
             <relcolspec type="topic" linking="sourceonly">
@@ -52,7 +52,7 @@ And a document with filename "xxag.ditamap" exists with content
         </relheader>
         <relrow>
             <relcell>
-                <topicref keyref=""></topicref>
+                <topicref keyref="xxah"></topicref>
             </relcell>
             <relcell></relcell>
             <relcell></relcell>
