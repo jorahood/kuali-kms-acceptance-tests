@@ -194,9 +194,10 @@ When /^I edit the content of the document to be$/ do |content|
   end
 end
 
-When /^I preview the document$/ do
+When /^I preview the document with audience filter "([^"]*)"$/ do |audience|
   within_frame frame_id() do
     sleep 10 # give the poller time to render
+    select(audience, :from => 'kmsAudiencePreview')
     find('#previewDocument').click
   end
 end
