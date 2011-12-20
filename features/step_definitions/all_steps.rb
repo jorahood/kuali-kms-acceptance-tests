@@ -184,7 +184,9 @@ When /^I edit the "([^"]*)" branch of the document with filename "([^"]*)"$/ do 
     #click the filename in the dropdown created via javascript
     find('div.dropItem', :text => "/#{filename}").click
     select(branch, :from => 'branchIdForFilenameDivSelect')
-    click_button('submit')
+    with_scope('div.right') do
+      click_button('submit')
+    end
   end
 end
 

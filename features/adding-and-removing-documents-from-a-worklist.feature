@@ -17,7 +17,7 @@ And worklist 3090 is empty
 And I add document "xxxx" to the worklist
 And I press "save"
 And I add document "xxxx" to the worklist
-Then I should see "Duplicate entries not allowed in worklist"
+Then I should see "duplicate entries not allowed in worklist"
 And I press "save"
 Then I should see document "xxxx" once
 
