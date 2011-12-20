@@ -92,6 +92,7 @@ Given /^a document with filename "([^"]*)" exists with content$/ do |filename, s
     """
     * press "save" in the frame
   }
+  #pause this whole shebang until the page reloads
   within_frame frame_id() do
     wait_until { page.has_content?('save')}
   end
@@ -195,7 +196,7 @@ end
 
 When /^I preview the document$/ do
   within_frame frame_id() do
-    sleep 30 # give the poller time to render
+    sleep 10 # give the poller time to render
     find('#previewDocument').click
   end
 end
