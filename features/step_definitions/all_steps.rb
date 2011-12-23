@@ -301,6 +301,13 @@ Then /^I should see "([^"]*)" in the preview window$/ do |string|
   end
 end
 
+Then /^I should not see "([^"]*)" in the preview window$/ do |string|
+  # from http://blog.kshitizgurung.info/2011/07/detecting-popup-window-and-implementing-test-on-in-capybara-selenium/
+  within_window(page.driver.browser.window_handles.last) do
+    page.should_not have_content(string)
+  end
+end
+
 Then /^(?:|I )should see element (.*)$/ do |element|
   page.should have_xpath("//#{element}")
 end

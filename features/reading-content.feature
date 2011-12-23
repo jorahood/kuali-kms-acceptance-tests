@@ -14,10 +14,7 @@ And a document with filename "xxxx.dita" exists with content
 </title>
 </topic>
 """
-When I follow "Document Search"
-And I fill in "docid" with "xxxx" in the frame
-And I press "search" in the frame
-And I follow "xxxx" in the frame
-Then I should see "How can I contact the Support Center at each IU campus for help?" within "document.kmsDocument.content" in the frame
+When I view the document with filename "xxxx.dita"
+Then I should see "How can I contact the Support Center at each IU campus for help?" in the document text
 
            

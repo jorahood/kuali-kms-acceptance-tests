@@ -36,7 +36,7 @@ Capybara.run_server = false # to keep Capybara from starting a Rack server
      class Bridge
        def execute(*args)
          res = raw_execute(*args)['value']
-         sleep 0
+         sleep 0.2
          res
        end
      end
