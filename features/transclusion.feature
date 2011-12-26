@@ -16,7 +16,7 @@ Given a document with filename "boilers-task.dita" exists with content
 <task id="box">
   <title id="default">A container task for boilers</title>
   <taskbody>
-    <prereq id="must-create-topic-and-map">You must have created a new topic and its ditamap in the DITA KB.</prereq>
+    <prereq id="must-create-topic-and-map">Test sentence. You must have created a new topic and its ditamap in the DITA KB.</prereq>
   </taskbody>
 </task>
 """
@@ -65,5 +65,6 @@ And a document with filename "bawt.dita" exists with content
 """
 When I preview the document with audience filter "default"
 Then I should see "You must have created a new topic and its ditamap in the DITA KB." in the preview window
+And I should see "Test sentence." in the preview window
 
            
