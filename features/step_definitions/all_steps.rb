@@ -21,7 +21,7 @@ end
 
 Given /^a document with filename "([^"]*)" has content$/ do |filename, pystring|
   steps %{
-  Given I go to "/kms-snd/portal.do?selectedTab=main"
+  Given I go to "/kms-dev/portal.do?selectedTab=main"
   Given I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
   * fill in "document.kmsDocument.fileName" with "#{filename}" in the frame
@@ -45,7 +45,7 @@ end
 
 Given /^a worklist exists with id (\d+)$/ do |id|
   steps %{
-  When I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  When I go to "/kms-dev/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   Then I should see "#{id}" within "table.headerinfo"
   And I should not see "Document no longer exists."
   }
@@ -63,13 +63,13 @@ end
 
 Given /^I view worklist (\d+)$/ do |id|
   steps %{
-  Given I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  Given I go to "/kms-dev/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   }
 end
 
 Given /^worklist (\d+) is empty$/ do |id|
   steps %{
-  * I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
+  * I go to "/kms-dev/worklist.do?methodToCall=docHandler&docId=#{id}&command=displayDocSearchView#topOfForm"
   }
   # this will delete all documents in a worklist, one by one. Each gets removed via javascript instantly but
   # the change isn't final until you click save
@@ -137,7 +137,7 @@ Given /^the worklist contains the following documents:$/ do |docs|
 end
 
 Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs|
-  Given %{I go to "/kms-snd/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"}
+  Given %{I go to "/kms-dev/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"}
   docs.hashes.each do |doc|
     steps %{
     * I fill in "newWorkListItem.documentId" with "#{doc[:id]}"
@@ -176,6 +176,22 @@ Given /^I fill in the sample dita content$/ do
   within_frame frame_id() do
     find('kmsSampleTopic').click
   end
+end
+
+When /^I add document "([^"]*)" to a new worklist$/ do |docid|
+  click_link('New worklist')
+  within_frame frame_id() do
+    fill_in('document.documentHeader.documentDescription', :with => "another test list")
+    fill_in("newWorkListItem.newFileName", :with=> docid)
+    click_button("Add a Worklist Item")
+  end
+end
+
+When /^I save the worklist$/ do
+  within_frame frame_id() do
+    find(:xpath, "//input[@title='save']").click
+  end
+
 end
 
 When /^I edit the "([^"]*)" branch of the document with filename "([^"]*)"$/ do |branch, filename|
@@ -325,7 +341,7 @@ Then /^the worklist should be sorted by author$/ do
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|
-  steps %{Then I should see "#{filename}" within "#workListItems"}
+  steps %{Then I should see "#{filename}" within "table#workListItems" in the frame}
 end
 
 Then /^I should not see document "([^"]*)"$/ do |filename|

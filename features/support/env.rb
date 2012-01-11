@@ -26,7 +26,8 @@ require 'capybara/session'
 Capybara.default_selector = :css
 Capybara.default_driver = :selenium
 Capybara.default_wait_time = 10
-Capybara.app_host = "https://test.uisapp2.iu.edu"
+#Capybara.app_host = "https://test.uisapp2.iu.edu"
+Capybara.app_host = "http://10.0.1.21:8080"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
 
 #slo-mo hack from http://stackoverflow.com/questions/3876412/capybara-doesnt-recognize-dynamically-added-dom-elements
@@ -36,7 +37,7 @@ Capybara.run_server = false # to keep Capybara from starting a Rack server
      class Bridge
        def execute(*args)
          res = raw_execute(*args)['value']
-         sleep 0.2
+         sleep 0
          res
        end
      end
