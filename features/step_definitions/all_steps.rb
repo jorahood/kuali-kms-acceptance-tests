@@ -21,7 +21,7 @@ end
 
 Given /^a document with filename "([^"]*)" has content$/ do |filename, pystring|
   steps %{
-  Given I go to "/kms-dev/portal.do?selectedTab=main"
+  Given I go to the homepage
   Given I follow "New content"
   * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
   * fill in "document.kmsDocument.fileName" with "#{filename}" in the frame
@@ -117,12 +117,7 @@ Given /^the following documents exist with metadata:$/ do |docs|
 end
 
 Given /^a new worklist$/ do
-  within_frame frame_id() do
-    click_link('New worklist')
-  end
-  within_frame frame_id() do
-    fill_in('document.documentHeader.documentDescription', :with => "another test list")
-  end
+  click_link('New worklist')
 end
 
 Given /^the worklist contains the following documents:$/ do |docs|
@@ -178,8 +173,7 @@ Given /^I fill in the sample dita content$/ do
   end
 end
 
-When /^I add document "([^"]*)" to a new worklist$/ do |docid|
-  click_link('New worklist')
+When /^I add document "([^"]*)" to the worklist$/ do |docid|
   within_frame frame_id() do
     fill_in('document.documentHeader.documentDescription', :with => "another test list")
     fill_in("newWorkListItem.newFileName", :with=> docid)
@@ -187,9 +181,16 @@ When /^I add document "([^"]*)" to a new worklist$/ do |docid|
   end
 end
 
+When /^I remove document "([^"]*)" from the worklist$/ do |arg1|
+  within_frame frame_id() do
+    click_button("Delete a Worklist Item")
+  end
+end
+
 When /^I save the worklist$/ do
   within_frame frame_id() do
-    find(:xpath, "//input[@title='save']").click
+    click_button("save")
+    #    find(:xpath, "//input[@title='save']").click
   end
 
 end
@@ -218,11 +219,6 @@ When /^I preview the document with audience filter "([^"]*)"$/ do |audience|
     select(audience, :from => 'kmsAudiencePreview')
     find('#previewDocument').click
   end
-end
-
-When /^I add document "([^"]*)" to the worklist$/ do |filename|
-  fill_in('newWorkListItem.newFileName', :with => filename)
-  click_button('Add a Worklist Item')
 end
 
 When /^I sort the worklist by content id$/ do
@@ -284,11 +280,15 @@ end
 Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |text, selector|
   within_frame frame_id() do
     with_scope(selector) do
-      if page.respond_to? :should
-        page.should have_content(text)
-      else
-        assert page.has_content?(text)
-      end
+      page.should have_content(text)
+    end
+  end
+end
+
+Then /^(?:|I )should not see "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |text, selector|
+  within_frame frame_id() do
+    with_scope(selector) do
+      page.should_not have_content(text)
     end
   end
 end
@@ -330,7 +330,7 @@ end
 
 Then /^the documents should appear in this order:$/ do |docs|
   docs.hashes.each_with_index do |doc, i|
-    steps %{Then I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
+    steps %{* I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
   end
 end
 
@@ -341,15 +341,25 @@ Then /^the worklist should be sorted by author$/ do
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|
-  steps %{Then I should see "#{filename}" within "table#workListItems" in the frame}
+  #  within_frame frame_id() do
+  #    find("#workListItems") #wait for it
+  #    with_scope("#workListItems") do
+  #        page.should have_content(filename)
+  #    end
+  steps %{Then I should see "#{filename}" within "#workListItems" in the frame}
+  #  end
 end
 
 Then /^I should not see document "([^"]*)"$/ do |filename|
-  steps %{Then I should not see "#{filename}" within "#workListItems"}
+  steps %{Then I should not see "#{filename}" within "#workListItems" in the frame}
 end
 
 Then /^I should see document "([^"]*)" once$/ do |filename|
-  page.should contain_once(filename)
+  within_frame frame_id() do
+    with_scope("#workListItems") do
+      page.should contain_once(filename)
+    end
+  end
 end
 
 Then /^show me the frame$/ do
