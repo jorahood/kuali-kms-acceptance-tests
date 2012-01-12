@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="1" name="Deleting content" skipped="0" tests="1" time="13.838798">
+<testcase classname="Deleting content.I can delete a doc" name="I can delete a doc" time="13.838798">
+  <failure message="failed" type="failed">
+Scenario: I can delete a doc
+
+Given I am logged in as "editor1"
+And a document with filename "xxxx" exists with content
+When I go to the homepage
+And I follow "Delete content"
+And I fill in "documentId" with "xxxx" in the frame
+And I press "submit" in the frame
+
+Message:
+no link with title, id or text 'Delete content' found (Capybara::ElementNotFound) (Capybara::ElementNotFound)
+(eval):2:in `send'
+(eval):2:in `click_link'
+./features/step_definitions/web_steps.rb:35
+./features/step_definitions/web_steps.rb:14:in `with_scope'
+./features/step_definitions/web_steps.rb:34:in `/^(?:|I )follow "([^"]*)"(?: within "([^"]*)")?$/'
+features/deleting-content.feature:18:in `And I follow "Delete content"'  </failure>
+</testcase>
+</testsuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="CRUD web interface" skipped="0" tests="2" time="0.454698">
+<testcase classname="CRUD web interface.I am asked to log in" name="I am asked to log in" time="0.080770">
+</testcase>
+<testcase classname="CRUD web interface.I can log in as an editor" name="I can log in as an editor" time="0.373928">
+</testcase>
+</testsuite>

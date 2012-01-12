@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="Creating content" skipped="0" tests="2" time="4.793605">
+<testcase classname="Creating content.All form fields that I must complete for a new document are marked with an asterisk" name="All form fields that I must complete for a new document are marked with an asterisk" time="1.107525">
+</testcase>
+<testcase classname="Creating content.I can add a new doc" name="I can add a new doc" time="3.686080">
+</testcase>
+</testsuite>

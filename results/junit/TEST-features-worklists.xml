@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="Worklists" skipped="0" tests="1" time="0.411783">
+<testcase classname="Worklists.Creating a new worklist is an option" name="Creating a new worklist is an option" time="0.411783">
+</testcase>
+</testsuite>
