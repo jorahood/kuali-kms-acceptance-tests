@@ -190,7 +190,6 @@ end
 When /^I save the worklist$/ do
   within_frame frame_id() do
     click_button("save")
-    #    find(:xpath, "//input[@title='save']").click
   end
 
 end
@@ -215,7 +214,7 @@ end
 
 When /^I preview the document with audience filter "([^"]*)"$/ do |audience|
   within_frame frame_id() do
-    sleep 10 # give the poller time to render
+    sleep 40 # give the poller time to render
     select(audience, :from => 'kmsAudiencePreview')
     find('#previewDocument').click
   end
