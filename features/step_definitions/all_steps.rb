@@ -93,9 +93,9 @@ Given /^a document with filename "([^"]*)" exists with content$/ do |filename, s
     * press "save" in the frame
   }
   #pause this whole shebang until the page reloads
-  within_frame frame_id() do
-    wait_until { page.has_content?('save')}
-  end
+#  within_frame frame_id() do
+#    wait_until { page.has_content?('save')}
+#  end
 end
 
 Given /^the following documents exist with metadata:$/ do |docs|
@@ -117,18 +117,19 @@ Given /^the following documents exist with metadata:$/ do |docs|
 end
 
 Given /^a new worklist$/ do
-  click_link('New worklist')
+  within_frame frame_id() do
+    click_link('New worklist')
+  end
 end
 
 Given /^the worklist contains the following documents:$/ do |docs|
-  docs.hashes.each do |doc|
-    steps %{
-    * I fill in "newWorkListItem.newFileName" with "#{doc[:filename]}"
-    }
-    click_button("Add a Worklist Item")
-
-  end
+  within_frame frame_id() do
+    docs.hashes.each do |doc|
+      fill_in("newWorkListItem.newFileName", :with=> "#{doc[:filename]}")
+      click_button("Add a Worklist Item")
+    end
   click_button('save')
+  end
 end
 
 Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs|
@@ -143,13 +144,17 @@ Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs
 end
 
 Given /^the worklist displays the author column$/ do
-  check('Author:')
-  click_button('save')
+  within_frame frame_id() do
+    check('Author:')
+    click_button('save')
+  end
 end
 
 Given /^the worklist displays the owner column$/ do
-  check('Owner:')
-  click_button('save')
+  within_frame frame_id() do
+    check('Owner:')
+    click_button('save')
+  end
 end
 
 #with single quotes since we may need double quotes in the string
@@ -214,28 +219,36 @@ end
 
 When /^I preview the document with audience filter "([^"]*)"$/ do |audience|
   within_frame frame_id() do
-    sleep 40 # give the poller time to render
+    sleep 10 # give the poller time to render
     select(audience, :from => 'kmsAudiencePreview')
     find('#previewDocument').click
   end
 end
 
 When /^I sort the worklist by content id$/ do
-  find('th.header', :text => 'Content id').click
+  within_frame frame_id() do
+    find('th.header', :text => 'Content id').click
+  end
 end
 
 When /^I sort the worklist by author$/ do
-  # see Capybara::Node::Finders#find
-  find('th.header', :text => 'Author').click
+  within_frame frame_id() do
+    # see Capybara::Node::Finders#find
+    find('th.header', :text => 'Author').click
+  end
 end
 
 When /^I set this sort order as default$/ do
-  check('saveCurrentSortOrder')
-  click_button('save')
+  within_frame frame_id() do
+    check('saveCurrentSortOrder')
+    click_button('save')
+  end
 end
 
 When /^I reload the worklist$/ do
-  click_button('reload')
+  within_frame frame_id() do
+    click_button('reload')
+  end
 end
 
 When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")? in the frame$/ do |button, selector|
@@ -329,14 +342,16 @@ end
 
 Then /^the documents should appear in this order:$/ do |docs|
   docs.hashes.each_with_index do |doc, i|
-    steps %{* I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})"}
+    step %{I should see "#{doc[:id]}" within "#workListItems tbody tr:nth-child(#{i + 1})" in the frame}
   end
 end
 
 Then /^the worklist should be sorted by author$/ do
   #tell Capybara to wait until the sorted header is updated
-  wait_until{ page.has_content?('th.headerSortDown')}
-  step %{I should see "Author" within "th.headerSortDown"}
+  within_frame frame_id() do
+    find('th.headerSortDown')
+  end
+  step %{I should see "Author" within "th.headerSortDown" in the frame}
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|

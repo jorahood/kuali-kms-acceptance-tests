@@ -19,8 +19,8 @@ require 'cucumber/formatter/unicode'
 
 require 'capybara/cucumber'
 require 'capybara/session'
+#require 'capybara/webkit'
 # driver configuration to make Capybara block and wait for Ajax requests to finish after you've interacted with a page:
-
 #Capybara.register_driver(:selenium) do |app|
 #  Capybara::Selenium::Driver.new(app, :resynchronize => true)
 #end
@@ -67,15 +67,16 @@ module Bumps
         gsub(/<\/tr[^>]*>\n?/,"|").             # replace tr with vertical bars, i.e., cuke tables
         gsub(/<(\/td|\/th|tbody)[^>]*>\n?/,""). # remove td and th close tags and tbody
         gsub(/<\/?[^>]*>/, "").
-          gsub(/&nbsp;/, " ").
-          gsub(/&#91;/, "[").
-          gsub(/&#93;/, "]").
-          gsub(/&#33;/, "!"). # confluence in rich text mode changes ! to \!, which becomes &#33; This changes it back.
+        gsub(/&nbsp;/, " ").
+        gsub(/&#91;/, "[").
+        gsub(/&#93;/, "]").
+        gsub(/&#33;/, "!"). # confluence in rich text mode changes ! to \!, which becomes &#33; This changes it back.
+        gsub(/&#45;/, "-"). # confluence in rich text mode changes - to &#45;
         gsub(/&lt;/,"<").
-          gsub(/&gt;/,">").
-          gsub(/&quot;/,'"').
-          sub(/^.*?Feature:/m,"Feature:").
-          sub(/^\s*View Online/,"")               # remove "view online" link
+        gsub(/&gt;/,">").
+        gsub(/&quot;/,'"').
+        sub(/^.*?Feature:/m,"Feature:").
+        sub(/^\s*View Online/,"")               # remove "view online" link
 
         Feature.new(dashed_name, content)
       end
@@ -93,7 +94,7 @@ module Bumps
   end
 end
 
-if ENV["SELENIUM_HEADLESS"] == 'true' || ENV["WEBKIT_HEADLESS"] == 'true'
+if ENV["SELENIUM_HEADLESS"] == 'true'
 
   require "headless"
   Before('@selenium') do

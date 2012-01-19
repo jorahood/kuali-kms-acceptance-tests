@@ -19,8 +19,7 @@ Given the following documents exist with metadata:
 | xxxc  | chuck |
 
 
-And a worklist exists with id 3090
-And worklist 3090 is empty
+And a new worklist
 And the worklist contains the following documents:
 
 
@@ -61,8 +60,7 @@ And the following documents exist with metadata:
 | xxxx | bob |
 
 
-And a worklist exists with id 3090
-And worklist 3090 is empty
+And a new worklist
 And the worklist contains the following documents:
 
 

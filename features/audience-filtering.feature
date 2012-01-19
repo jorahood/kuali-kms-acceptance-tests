@@ -10,7 +10,7 @@ Given a document with filename "kbstaff.ditaval" exists with content
 """
 <?xml version="1.0" encoding="UTF-8"?>
 <val>
-<!&#45; kbstaff sees everything, so include all audience-filtered content &#45;>
+<!-- kbstaff sees everything, so include all audience-filtered content -->
 <prop action="include" att="audience" ></prop>
 </val>
 """
@@ -73,12 +73,20 @@ Given a document with filename "default.ditaval" exists with content
 <prop action="include" att="audience" val="default" ></prop>
 </val>
 """
+And a document with filename "kbstaff.ditaval" exists with content
+"""
+<?xml version="1.0" encoding="UTF-8"?>
+<val>
+<!-- kbstaff sees everything, so include all audience-filtered content -->
+<prop action="include" att="audience" ></prop>
+</val>
+"""
 And a document with filename "bbah.dita" exists with content
 """
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE task PUBLIC "urn:pubid:org.kuali.kits.kms:doctypes:dita:task"
 "http://www.indiana.edu/~worklist/dita-prototypes/org.kuali.kits.kms/doctypes/task/dtd/kbtask.dtd">
-<task audience="default" id="kbdoc">
+<task id="kbdoc">
 <title id="default">How do I define the keys for all cross references in a topic in the DITA KB?</title>
 <taskbody>
 <steps>
