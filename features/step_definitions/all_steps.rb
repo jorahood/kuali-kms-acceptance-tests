@@ -11,6 +11,10 @@ Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
   }
 end
 
+When /^I am backdoor logged in as "([^"]*)"$/ do |username|
+ fill_in('backdoorId', :with=> 'username')
+end
+
 Given /^document "([^"]*)" does not exist$/ do |docid|
   steps %{
   Given I go to delete a document
@@ -56,7 +60,7 @@ Given /^a document with filename "([^"]*)" exists$/ do |filename|
   steps %{
   * I follow "Main Menu"
   * I follow "New content"
-  * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
+  * fill in "document.documentHeader.documentDescription" with "#{filename}" in the frame
   * fill in "document.kmsDocument.kmsFileName.fileName" with "#{name}" in the frame
   * I select "#{extension}" from "document.kmsDocument.kmsFileName.fileTypeCode" in the frame}
 end
@@ -176,6 +180,9 @@ Given /^I fill in the sample dita content$/ do
   within_frame frame_id() do
     find('kmsSampleTopic').click
   end
+end
+
+Given /^user "([^"]*)" is a member of the "([^"]*)" owner group$/ do |arg1, arg2|
 end
 
 When /^I add document "([^"]*)" to the worklist$/ do |docid|
@@ -320,6 +327,30 @@ When /^(?:|I )search for '([^']*)'$/ do |terms|
   * fill in "query" with #{terms}
   And press "Search"
   }
+end
+
+Then /^I should see document "([^"]*)" in my action list$/ do |filename|
+  click_link('Action List')
+  within_frame frame_id() do
+    page.should have_content(filename)
+  end
+end
+
+When /^I submit the document$/ do
+  within_frame frame_id() do
+    click_button('submit')
+  end
+end
+
+When /^I route the document for SME approval$/ do
+  within_frame frame_id() do
+    click_button('click here to route for SME approval')
+  end
+end
+
+When /^I impersonate user "([^"]*)"$/ do |username|
+  fill_in("backdoorId", :with=> 'username')
+  click_button('Login')
 end
 
 Then /^I should see "([^"]*)" in the preview window$/ do |string|
