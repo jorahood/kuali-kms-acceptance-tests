@@ -19,10 +19,10 @@ require 'cucumber/formatter/unicode'
 
 require 'capybara/cucumber'
 require 'capybara/session'
-#require 'capybara/webkit'
-# driver configuration to make Capybara block and wait for Ajax requests to finish after you've interacted with a page:
+require 'capybara/webkit'
+# driver configuration
 #Capybara.register_driver(:selenium) do |app|
-#  Capybara::Selenium::Driver.new(app, :resynchronize => true)
+# Capybara::Selenium::Driver.new(app, :browser => :chrome)
 #end
 
 Capybara.default_selector = :css

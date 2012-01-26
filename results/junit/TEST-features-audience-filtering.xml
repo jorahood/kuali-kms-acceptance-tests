@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="1" name="Audience filtering" skipped="0" tests="2" time="56.574351">
-<testcase classname="Audience filtering.I can see content filtered for audience kbstaff when I am audience kbstaff" name="I can see content filtered for audience kbstaff when I am audience kbstaff" time="34.379745">
-  <failure message="failed" type="failed">
-Scenario: I can see content filtered for audience kbstaff when I am audience kbstaff
-
-Given I am logged in as "editor1"
-Given a document with filename "kbstaff.ditaval" exists with content
-And a document with filename "bbah.dita" exists with content
-When I preview the document with audience filter "kbstaff"
-Then I should see "You need to run the xslt transformation" in the preview window
-
-Message:
-expected there to be content "You need to run the xslt transformation" in "Skip to content\nSearch: Knowledge Base    IU\nInclude archived documents\n10\n15\n20\n50\n100\n200\n300\nSearch results per page\nTHIS IS ONLY A DEMO OF PREVIEW FUNCTIONALITY. LINKS DO NOT WORK.\nLogin\nLogin is for authorized groups (e.g., UITS, OVPIT, and TCC) that need access to specialized Knowledge Base documents. Otherwise, simply use the Knowledge Base without logging in.\nUsername:\nPassword:\nClose\nHome Menus Glossary Help\nText size:\nBoth bbah.dita and bbah.ditamap must exist in the repository. Please route or save your document before previewing.\n\nLast modified on .\nComments/Questions/Corrections\nUse this form to offer suggestions, corrections, and additions to the Knowledge Base. We welcome your input!\nIf you are affiliated with Indiana University and would like assistance with a specific computing problem, please use the Ask a Consultant form, or contact your campus Support Center.\nContact Information\nFull Name:\n\nE-mail address:\nNote: We will reply to your comment at this address. If your message concerns a problem receiving email, please enter an alternate email address.\nMy comment concerns this document\nYour comments:\nChat with a consultant\n (IU login required)\nAvailable 24 hours a day, 7 days a week\nUITS Services and Support About the Knowledge Base KB Comments\nCopyright 2005-2010, The Trustees of Indiana University Copyright Complaints" (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
-./features/step_definitions/all_steps.rb:316
-./features/step_definitions/all_steps.rb:315:in `/^I should see "([^"]*)" in the preview window$/'
-features/audience-filtering.feature:34:in `Then I should see "You need to run the xslt transformation" in the preview window'  </failure>
+<testsuite errors="0" failures="0" name="Audience filtering" skipped="0" tests="2" time="86.994218">
+<testcase classname="Audience filtering.I can see content filtered for audience kbstaff when I am audience kbstaff" name="I can see content filtered for audience kbstaff when I am audience kbstaff" time="39.771164">
 </testcase>
-<testcase classname="Audience filtering.I can not see content filtered for audience kbstaff when I am audience default" name="I can not see content filtered for audience kbstaff when I am audience default" time="22.194606">
+<testcase classname="Audience filtering.I can not see content filtered for audience kbstaff when I am audience default" name="I can not see content filtered for audience kbstaff when I am audience default" time="47.223054">
 </testcase>
 </testsuite>

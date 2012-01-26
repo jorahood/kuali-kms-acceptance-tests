@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="0" name="Adding and removing documents from a worklist" skipped="0" tests="3" time="29.486323">
-<testcase classname="Adding and removing documents from a worklist.I can add a document to a worklist" name="I can add a document to a worklist" time="13.866200">
+<testsuite errors="0" failures="0" name="Adding and removing documents from a worklist" skipped="0" tests="3" time="18.738068">
+<testcase classname="Adding and removing documents from a worklist.I can add a document to a worklist" name="I can add a document to a worklist" time="6.681513">
 </testcase>
-<testcase classname="Adding and removing documents from a worklist.I cannot add the same document twice" name="I cannot add the same document twice" time="11.428274">
+<testcase classname="Adding and removing documents from a worklist.I cannot add the same document twice" name="I cannot add the same document twice" time="8.719904">
 </testcase>
-<testcase classname="Adding and removing documents from a worklist.I can remove a document from a worklist" name="I can remove a document from a worklist" time="4.191849">
+<testcase classname="Adding and removing documents from a worklist.I can remove a document from a worklist" name="I can remove a document from a worklist" time="3.336651">
 </testcase>
 </testsuite>

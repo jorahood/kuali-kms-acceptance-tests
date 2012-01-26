@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="1" name="Rendering" skipped="0" tests="3" time="99.352350">
-<testcase classname="Rendering.I can render a DITA-OT sample document" name="I can render a DITA-OT sample document" time="25.011296">
+<testsuite errors="0" failures="1" name="Rendering" skipped="0" tests="3" time="135.009946">
+<testcase classname="Rendering.I can render a DITA-OT sample document" name="I can render a DITA-OT sample document" time="40.666691">
 </testcase>
-<testcase classname="Rendering.I can render a specialized doc that doesn't reference any other documents" name="I can render a specialized doc that doesn't reference any other documents" time="24.772767">
-</testcase>
-<testcase classname="Rendering.I can render a specialized doc, bawq, that references another document, bawf" name="I can render a specialized doc, bawq, that references another document, bawf" time="49.568287">
+<testcase classname="Rendering.I can render a specialized doc that doesn't reference any other documents" name="I can render a specialized doc that doesn't reference any other documents" time="50.274615">
   <failure message="failed" type="failed">
-Scenario: I can render a specialized doc, bawq, that references another document, bawf
+Scenario: I can render a specialized doc that doesn't reference any other documents
 
 Given I am logged in as "editor1"
-Given a document with filename "bawf.dita" exists with content
-And a document with filename "bawf.ditamap" exists with content
-And a document with filename "bawq.dita" exists with content
-And a document with filename "bawq.ditamap" exists with content
+Given a document with filename "bbah.dita" exists with content
+And a document with filename "bbah.ditamap" exists with content
 When I preview the document with audience filter "default"
-Then I should see "How do I use the Subversion DITA repository?" in the preview window
+Then I should see "You need to run the xslt transformation" in the preview window
 
 Message:
-expected there to be content "How do I use the Subversion DITA repository?" in "Skip to content\nSearch: Knowledge Base    IU\nInclude archived documents\n10\n15\n20\n50\n100\n200\n300\nSearch results per page\nTHIS IS ONLY A DEMO OF PREVIEW FUNCTIONALITY. LINKS DO NOT WORK.\nLogin\nLogin is for authorized groups (e.g., UITS, OVPIT, and TCC) that need access to specialized Knowledge Base documents. Otherwise, simply use the Knowledge Base without logging in.\nUsername:\nPassword:\nClose\nHome Menus Glossary Help\nText size:\n\n\nLast modified on .\nComments/Questions/Corrections\nUse this form to offer suggestions, corrections, and additions to the Knowledge Base. We welcome your input!\nIf you are affiliated with Indiana University and would like assistance with a specific computing problem, please use the Ask a Consultant form, or contact your campus Support Center.\nContact Information\nFull Name:\n\nE-mail address:\nNote: We will reply to your comment at this address. If your message concerns a problem receiving email, please enter an alternate email address.\nMy comment concerns this document\nYour comments:\nChat with a consultant\n (IU login required)\nAvailable 24 hours a day, 7 days a week\nUITS Services and Support About the Knowledge Base KB Comments\nCopyright 2005-2010, The Trustees of Indiana University Copyright Complaints" (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
-./features/step_definitions/all_steps.rb:316
-./features/step_definitions/all_steps.rb:315:in `/^I should see "([^"]*)" in the preview window$/'
-features/rendering.feature:299:in `Then I should see "How do I use the Subversion DITA repository?" in the preview window'  </failure>
+expected there to be content "You need to run the xslt transformation" in "Skip to content\nSearch: Knowledge Base    IU\nInclude archived documents\n10\n15\n20\n50\n100\n200\n300\nSearch results per page\nTHIS IS ONLY A DEMO OF PREVIEW FUNCTIONALITY. LINKS DO NOT WORK.\nLogin\nLogin is for authorized groups (e.g., UITS, OVPIT, and TCC) that need access to specialized Knowledge Base documents. Otherwise, simply use the Knowledge Base without logging in.\nUsername:\nPassword:\nClose\nHome Menus Glossary Help\nText size:\nHow do I define the keys for all cross references in a topic in the DITA KB?\nProcedure\nWith the topic or associated map open in the editor window, in the toolbar, select Configure Transformation Scenario\n\n\nLast modified on .\nComments/Questions/Corrections\nUse this form to offer suggestions, corrections, and additions to the Knowledge Base. We welcome your input!\nIf you are affiliated with Indiana University and would like assistance with a specific computing problem, please use the Ask a Consultant form, or contact your campus Support Center.\nContact Information\nFull Name:\n\nE-mail address:\nNote: We will reply to your comment at this address. If your message concerns a problem receiving email, please enter an alternate email address.\nMy comment concerns this document\nYour comments:\nChat with a consultant\n (IU login required)\nAvailable 24 hours a day, 7 days a week\nUITS Services and Support About the Knowledge Base KB Comments\nCopyright 2005-2010, The Trustees of Indiana University Copyright Complaints" (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/all_steps.rb:341
+./features/step_definitions/all_steps.rb:340:in `/^I should see "([^"]*)" in the preview window$/'
+features/rendering.feature:157:in `Then I should see "You need to run the xslt transformation" in the preview window'  </failure>
+</testcase>
+<testcase classname="Rendering.I can render a specialized doc, bawq, that references another document, bawf" name="I can render a specialized doc, bawq, that references another document, bawf" time="44.068640">
 </testcase>
 </testsuite>

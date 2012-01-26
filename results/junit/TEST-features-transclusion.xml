@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="1" name="Transclusion" skipped="0" tests="1" time="38.391407">
-<testcase classname="Transclusion.boiler usage" name="boiler usage" time="38.391407">
-  <failure message="failed" type="failed">
-Scenario: boiler usage
-
-Given I am logged in as "editor1"
-Given a document with filename "boilers-task.dita" exists with content
-And a document with filename "bawt.ditamap" exists with content
-And a document with filename "bawt.dita" exists with content
-When I preview the document with audience filter "default"
-Then I should see "You must have created a new topic and its ditamap in the DITA KB." in the preview window
-And I should see "Test sentence." in the preview window
-
-Message:
-expected there to be content "You must have created a new topic and its ditamap in the DITA KB." in "Skip to content\nSearch: Knowledge Base    IU\nInclude archived documents\n10\n15\n20\n50\n100\n200\n300\nSearch results per page\nTHIS IS ONLY A DEMO OF PREVIEW FUNCTIONALITY. LINKS DO NOT WORK.\nLogin\nLogin is for authorized groups (e.g., UITS, OVPIT, and TCC) that need access to specialized Knowledge Base documents. Otherwise, simply use the Knowledge Base without logging in.\nUsername:\nPassword:\nClose\nHome Menus Glossary Help\nText size:\n\n\nLast modified on .\nComments/Questions/Corrections\nUse this form to offer suggestions, corrections, and additions to the Knowledge Base. We welcome your input!\nIf you are affiliated with Indiana University and would like assistance with a specific computing problem, please use the Ask a Consultant form, or contact your campus Support Center.\nContact Information\nFull Name:\n\nE-mail address:\nNote: We will reply to your comment at this address. If your message concerns a problem receiving email, please enter an alternate email address.\nMy comment concerns this document\nYour comments:\nChat with a consultant\n (IU login required)\nAvailable 24 hours a day, 7 days a week\nUITS Services and Support About the Knowledge Base KB Comments\nCopyright 2005-2010, The Trustees of Indiana University Copyright Complaints" (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
-./features/step_definitions/all_steps.rb:316
-./features/step_definitions/all_steps.rb:315:in `/^I should see "([^"]*)" in the preview window$/'
-features/transclusion.feature:67:in `Then I should see "You must have created a new topic and its ditamap in the DITA KB." in the preview window'  </failure>
+<testsuite errors="0" failures="0" name="Transclusion" skipped="0" tests="1" time="48.546924">
+<testcase classname="Transclusion.boiler usage" name="boiler usage" time="48.546924">
 </testcase>
 </testsuite>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="1" name="Deleting content" skipped="0" tests="1" time="13.838798">
-<testcase classname="Deleting content.I can delete a doc" name="I can delete a doc" time="13.838798">
+<testsuite errors="0" failures="1" name="Deleting content" skipped="0" tests="1" time="12.423922">
+<testcase classname="Deleting content.I can delete a doc" name="I can delete a doc" time="12.423922">
   <failure message="failed" type="failed">
 Scenario: I can delete a doc
 

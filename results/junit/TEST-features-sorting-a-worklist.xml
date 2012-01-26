@@ -1,36 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="2" name="Sorting a worklist" skipped="0" tests="2" time="28.777011">
-<testcase classname="Sorting a worklist.Sorting on one column ascending and descending" name="Sorting on one column ascending and descending" time="16.430082">
-  <failure message="failed" type="failed">
-Scenario: Sorting on one column ascending and descending
-
-Given I am logged in as "editor1"
-Given the following documents exist with metadata:
-And a worklist exists with id 3090
-And worklist 3090 is empty
-And the worklist contains the following documents:
-And the worklist displays the author column
-When I sort the worklist by author
-Then the documents should appear in this order:
-And I sort the worklist by author
-Then the documents should appear in this order:
-
-Message:
-Unable to find css "table.headerinfo" (Capybara::ElementNotFound) (Capybara::ElementNotFound)
-(eval):2:in `send'
-(eval):2:in `find'
-./features/step_definitions/web_steps.rb:14:in `with_scope'
-./features/step_definitions/web_steps.rb:108:in `/^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/'
-features/sorting-a-worklist.feature:22:in `And a worklist exists with id 3090'  </failure>
+<testsuite errors="0" failures="1" name="Sorting a worklist" skipped="0" tests="2" time="32.406739">
+<testcase classname="Sorting a worklist.Sorting on one column ascending and descending" name="Sorting on one column ascending and descending" time="13.026000">
 </testcase>
-<testcase classname="Sorting a worklist.Setting a default sort order for one column" name="Setting a default sort order for one column" time="12.346929">
+<testcase classname="Sorting a worklist.Setting a default sort order for one column" name="Setting a default sort order for one column" time="19.380739">
   <failure message="failed" type="failed">
 Scenario: Setting a default sort order for one column
 
 Given I am logged in as "editor1"
 And the following documents exist with metadata:
-And a worklist exists with id 3090
-And worklist 3090 is empty
+And a new worklist
 And the worklist contains the following documents:
 And the worklist displays the author column
 And I sort the worklist by author
@@ -40,11 +18,12 @@ And I reload the worklist
 Then the worklist should be sorted by author
 
 Message:
-Unable to find css "table.headerinfo" (Capybara::ElementNotFound) (Capybara::ElementNotFound)
-(eval):2:in `send'
-(eval):2:in `find'
+expected there to be content "Author" in "   " (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/all_steps.rb:367
 ./features/step_definitions/web_steps.rb:14:in `with_scope'
-./features/step_definitions/web_steps.rb:108:in `/^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/'
-features/sorting-a-worklist.feature:64:in `And a worklist exists with id 3090'  </failure>
+./features/step_definitions/web_steps.rb:14:in `with_scope'
+./features/step_definitions/all_steps.rb:366
+./features/step_definitions/all_steps.rb:364:in `/^the worklist should be sorted by author$/'
+features/sorting-a-worklist.feature:76:in `Then the worklist should be sorted by author'  </failure>
 </testcase>
 </testsuite>

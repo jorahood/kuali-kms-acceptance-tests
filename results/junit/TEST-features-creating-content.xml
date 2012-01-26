@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="0" name="Creating content" skipped="0" tests="2" time="4.793605">
-<testcase classname="Creating content.All form fields that I must complete for a new document are marked with an asterisk" name="All form fields that I must complete for a new document are marked with an asterisk" time="1.107525">
+<testsuite errors="0" failures="1" name="Creating content" skipped="0" tests="2" time="13.806452">
+<testcase classname="Creating content.All form fields that I must complete for a new document are marked with an asterisk" name="All form fields that I must complete for a new document are marked with an asterisk" time="1.069782">
 </testcase>
-<testcase classname="Creating content.I can add a new doc" name="I can add a new doc" time="3.686080">
+<testcase classname="Creating content.I can add a new doc" name="I can add a new doc" time="12.736670">
+  <failure message="failed" type="failed">
+Scenario: I can add a new doc
+
+Given I am logged in as "editor1"
+When I follow "New content"
+And I fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
+And I fill in "document.kmsDocument.kmsFileName.fileName" with "xxxx" in the frame
+And I fill in "document.kmsDocument.content" in the frame with
+And I press "save" in the frame
+Then I should see "Document was successfully saved." in the frame
+
+Message:
+expected there to be content "Document was successfully saved." in "KMS Content Request \n  Doc Nbr: 3095   Status: INITIATED\n  Initiator: editor1   Created: 04:49 PM 01/26/2012\n1 error(s) found on page.\n\n* required field\nContent request\nErrors found in this Section:\nThis document has already been modified by another user. Press the \"reload\" button to replace your copy of the document with the newer version.\nDocument Overview\n  * Description:   Explanation:\nQuick links\nNew content\nEdit content\nSearch\nContent revision request lookup\nBranch maintenance\nFile type code maintenance\nNew worklist\nContent location\n  Branch name\ntrunk\n  Content id 1\n  * File xxxx.dita\n  * Folder /\n  Approved  by\n  Publish\n  * XML content\n&lt;task id=\"kbdoc\"&gt; &lt;title id=\"default\"&gt;In Microsoft Excel, how can I apply several formats to a cell in one step?&lt;/title&gt; &lt;/task&gt;\nSample documents:   dita topic   dita map   audience filter (ditaval)\n\nSelect an audience filter\ndefault\nkbstaff\n\n\nYou must save or route a document before previewing new changes.\nScan Hot Items\n\n\nContent metadata\nContent validation\nNotes and Attachments (0)\n\n\n\nAd Hoc Recipients\n\nRoute Log\n " (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/all_steps.rb:276
+./features/step_definitions/web_steps.rb:14:in `with_scope'
+./features/step_definitions/all_steps.rb:275
+./features/step_definitions/all_steps.rb:274:in `/^(?:|I )should see "([^"]*)"(?: within "([^"]*)")? in the frame$/'
+features/creating-content.feature:28:in `Then I should see "Document was successfully saved." in the frame'  </failure>
 </testcase>
 </testsuite>

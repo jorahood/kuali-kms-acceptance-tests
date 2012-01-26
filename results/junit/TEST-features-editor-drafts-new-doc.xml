@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="2" name="Editor creates a new doc" skipped="0" tests="3" time="41.781802">
+<testcase classname="Editor creates a new doc.An Editor submitting a doc causes it to appear in the Editors action list" name="An Editor submitting a doc causes it to appear in the Editors action list" time="5.908474">
+</testcase>
+<testcase classname="Editor creates a new doc.After an Editor submits a doc, it can be approved or disapproved by an Editor" name="After an Editor submits a doc, it can be approved or disapproved by an Editor" time="15.588624">
+  <failure message="failed" type="failed">
+Scenario: After an Editor submits a doc, it can be approved or disapproved by an Editor
+
+Given I am logged in as "editor1"
+Given a document with filename "xaac.dita" exists with content
+When I submit the document
+Then I should be able to "approve" the document
+And I should be able to "disapprove" the document
+
+Message:
+no button with value or id or text 'reload' found (Capybara::ElementNotFound) (Capybara::ElementNotFound)
+(eval):2:in `send'
+(eval):2:in `click_button'
+./features/step_definitions/all_steps.rb:332
+./features/step_definitions/all_steps.rb:331:in `/^I should be able to "([^"]*)" the document$/'
+features/editor-drafts-new-doc.feature:72:in `Then I should be able to "approve" the document'  </failure>
+</testcase>
+<testcase classname="Editor creates a new doc.An Editor requesting owner approval for a doc causes it to appear in the owner's action list" name="An Editor requesting owner approval for a doc causes it to appear in the owner's action list" time="20.284704">
+  <failure message="failed" type="failed">
+Scenario: An Editor requesting owner approval for a doc causes it to appear in the owner's action list
+
+Given I am logged in as "editor1"
+Given a document with filename "xaab.dita" exists with content
+And user "sme1" is a member of the "ONCOURSE-SME" owner group
+When I route the document for SME approval
+And I impersonate user "sme1"
+Then I should see document "xaab.dita" in my action list
+
+Message:
+expected there to be content "xaab.dita" in "Action List\n\n\n\nAction List | Outbox\n\n\n29 items retrieved, displaying 1 to 10.[First/Prev] 1, 2, 3 [Next/Last]\nId Type Title Route Status Action Requested Initiator Delegator Date Created Group Request Log\n3035 KMS Work List KMS Work List - another test list  SAVED COMPLETE Foobar, Editor1   03:27 PM 01/26/2012   \n3036 KMS Work List KMS Work List - another test list  SAVED COMPLETE Foobar, Editor1   03:27 PM 01/26/2012   \n3037 KMS Work List KMS Work List - another test list  SAVED COMPLETE Foobar, Editor1   03:28 PM 01/26/2012   \n3038 KMS Content Request KMS Content Request - kbstaff.ditaval  SAVED COMPLETE Foobar, Editor1   03:28 PM 01/26/2012   \n3039 KMS Content Request KMS Content Request - bbah.dita  SAVED COMPLETE Foobar, Editor1   03:28 PM 01/26/2012   \n3040 KMS Content Request KMS Content Request - bbah.ditamap  SAVED COMPLETE Foobar, Editor1   03:28 PM 01/26/2012   \n3041 KMS Content Request KMS Content Request - default.ditaval  SAVED COMPLETE Foobar, Editor1   03:29 PM 01/26/2012   \n3046 KMS Content Request KMS Content Request - an automated test doc  SAVED COMPLETE Foobar, Editor1   03:30 PM 01/26/2012   \n3048 KMS Content Request KMS Content Request - xaaa.dita  ENROUTE APPROVE Foobar, Editor1   03:31 PM 01/26/2012  KMS Editors\n3049 KMS Content Request KMS Content Request - xaac.dita  ENROUTE APPROVE Foobar, Editor1   03:31 PM 01/26/2012  KMS Editors" (RSpec::Expectations::ExpectationNotMetError) (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/all_steps.rb:309
+./features/step_definitions/all_steps.rb:308:in `/^I should see document "([^"]*)" in my action list$/'
+features/editor-drafts-new-doc.feature:104:in `Then I should see document "xaab.dita" in my action list'  </failure>
+</testcase>
+</testsuite>

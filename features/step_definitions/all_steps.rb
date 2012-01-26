@@ -11,29 +11,11 @@ Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
   }
 end
 
-When /^I am backdoor logged in as "([^"]*)"$/ do |username|
- fill_in('backdoorId', :with=> 'username')
-end
-
 Given /^document "([^"]*)" does not exist$/ do |docid|
   steps %{
   Given I go to delete a document
   * fill in "Enter a docid" with "#{docid}"
   And press "Delete document"
-  }
-end
-
-Given /^a document with filename "([^"]*)" has content$/ do |filename, pystring|
-  steps %{
-  Given I go to the homepage
-  Given I follow "New content"
-  * fill in "document.documentHeader.documentDescription" with "an automated test doc" in the frame
-  * fill in "document.kmsDocument.fileName" with "#{filename}" in the frame
-  * fill in "document.kmsDocument.content" in the frame with
-  """
-  #{pystring}
-  """
-  And press "save" in the frame
   }
 end
 
@@ -94,12 +76,10 @@ Given /^a document with filename "([^"]*)" exists with content$/ do |filename, s
     """
     #{string}
     """
-    * press "save" in the frame
   }
-  #pause this whole shebang until the page reloads
-#  within_frame frame_id() do
-#    wait_until { page.has_content?('save')}
-#  end
+  within_frame frame_id() do
+    click_button("save")
+  end
 end
 
 Given /^the following documents exist with metadata:$/ do |docs|
@@ -121,7 +101,12 @@ Given /^the following documents exist with metadata:$/ do |docs|
 end
 
 Given /^a new worklist$/ do
-  within_frame frame_id() do
+  begin
+    within_frame frame_id() do
+      click_link('New worklist')
+    end
+    # sometimes you got a frame, sometimes you don't
+  rescue(Selenium::WebDriver::Error::NoSuchFrameError)
     click_link('New worklist')
   end
 end
@@ -132,19 +117,8 @@ Given /^the worklist contains the following documents:$/ do |docs|
       fill_in("newWorkListItem.newFileName", :with=> "#{doc[:filename]}")
       click_button("Add a Worklist Item")
     end
-  click_button('save')
+    click_button('save')
   end
-end
-
-Given /^worklist (\d+) contains the following documents:$/ do |worklist_id, docs|
-  Given %{I go to "/kms-dev/worklist.do?methodToCall=docHandler&docId=#{worklist_id}&command=displayDocSearchView#topOfForm"}
-  docs.hashes.each do |doc|
-    steps %{
-    * I fill in "newWorkListItem.documentId" with "#{doc[:id]}"
-    * I press "Add a Worklist Item"
-    }
-  end
-  step %{I press "save"}
 end
 
 Given /^the worklist displays the author column$/ do
@@ -226,7 +200,7 @@ end
 
 When /^I preview the document with audience filter "([^"]*)"$/ do |audience|
   within_frame frame_id() do
-    sleep 10 # give the poller time to render
+    sleep 30 # give the poller time to render
     select(audience, :from => 'kmsAudiencePreview')
     find('#previewDocument').click
   end
@@ -353,6 +327,14 @@ When /^I impersonate user "([^"]*)"$/ do |username|
   click_button('Login')
 end
 
+Then /^I should be able to "([^"]*)" the document$/ do |label|
+  within_frame frame_id() do
+    click_button('reload') #have to reload the doc to have the new buttons show up
+    click_button('reload') #this is selenium so let's click it twice for fun
+    page.find_button(label)
+  end
+end
+
 Then /^I should see "([^"]*)" in the preview window$/ do |string|
   # from http://blog.kshitizgurung.info/2011/07/detecting-popup-window-and-implementing-test-on-in-capybara-selenium/
   within_window(page.driver.browser.window_handles.last) do
@@ -381,8 +363,10 @@ Then /^the worklist should be sorted by author$/ do
   #tell Capybara to wait until the sorted header is updated
   within_frame frame_id() do
     find('th.headerSortDown')
+    with_scope('th.headerSortDown') do
+      page.should have_content('Author')
+    end
   end
-  step %{I should see "Author" within "th.headerSortDown" in the frame}
 end
 
 Then /^I should see document "([^"]*)"$/ do |filename|
