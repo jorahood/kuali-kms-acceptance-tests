@@ -21,15 +21,15 @@ require 'capybara/cucumber'
 require 'capybara/session'
 require 'capybara/webkit'
 # driver configuration
-#Capybara.register_driver(:selenium) do |app|
-# Capybara::Selenium::Driver.new(app, :browser => :chrome)
-#end
+Capybara.register_driver(:selenium) do |app|
+ Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
 
 Capybara.default_selector = :css
 Capybara.default_driver = :selenium
 Capybara.default_wait_time = 10
-#Capybara.app_host = "https://test.uisapp2.iu.edu"
-Capybara.app_host = "http://10.0.1.22:8080"
+Capybara.app_host = "https://apps-test.iu.edu"
+#Capybara.app_host = "http://10.0.1.22:8080"
 Capybara.run_server = false # to keep Capybara from starting a Rack server
 
 #slo-mo hack from http://stackoverflow.com/questions/3876412/capybara-doesnt-recognize-dynamically-added-dom-elements

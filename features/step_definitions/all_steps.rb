@@ -4,11 +4,18 @@ def frame_id
 end
 
 Given /^(?:|I )am logged in as "([^"]*)"$/ do |username|
-  steps %{
-  Given I go to the homepage
-  * fill in "__login_user" with "#{username}"
-  And press "Login"
-  }
+  #check if we're already logged into CAS since we only have to do that once
+  visit '/kms-reg/portal.do'
+  unless page.has_content?('jorahood')
+    # we're not yet logged into CAS, so do so
+    fill_in("username", :with=> "jorahood")
+    fill_in("password", :with=> "my password (not really)")
+    click_button("btnLogin")
+  else
+    #we're already logged into CAS, so backdoor login as whoever
+    fill_in("backdoorId", :with=> "#{username}")
+    click_button("Login")
+  end
 end
 
 Given /^document "([^"]*)" does not exist$/ do |docid|
