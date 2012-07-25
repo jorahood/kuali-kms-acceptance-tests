@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="1" name="KBSS" skipped="0" tests="1" time="0.019724">
+<testcase classname="KBSS.I can search on document content" name="I can search on document content" time="0.019724">
+  <failure message="failed" type="failed">
+Scenario: I can search on document content
+
+Given I am logged in as "editor1"
+Given a document with filename "xaai.dita" contains the word "splunge"
+When I search for documents containing content "splunge"
+Then I should see document "xaai.dita" in the search results
+
+Message:
+cannot fill in, no text field, text area or password field with id, name, or label '__login_user' found (Capybara::ElementNotFound) (Capybara::ElementNotFound) (Capybara::ElementNotFound)
+(eval):2:in `send'
+(eval):2:in `fill_in'
+./features/step_definitions/all_steps.rb:16:in `/^(?:|I )am logged in as "([^"]*)"$/'
+features/kbss.feature:6:in `Given I am logged in as "editor1"'  </failure>
+</testcase>
+</testsuite>

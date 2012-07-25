@@ -75,7 +75,7 @@ module Bumps
         gsub(/&lt;/,"<").
         gsub(/&gt;/,">").
         gsub(/&quot;/,'"').
-        sub(/^.*?Feature:/m,"Feature:").
+        sub(/^.*?Feature:/m,"Feature:").        # delete all content that comes before the first occurrence of "Feature"
         sub(/^\s*View Online/,"")               # remove "view online" link
 
         Feature.new(dashed_name, content)
@@ -94,6 +94,7 @@ module Bumps
   end
 end
 
+# to run in headless mode
 if ENV["SELENIUM_HEADLESS"] == 'true'
 
   require "headless"
